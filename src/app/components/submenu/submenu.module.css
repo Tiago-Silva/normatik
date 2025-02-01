@@ -1,0 +1,24 @@
+.submenu {
+    margin-top: 5px;
+    list-style: none;
+    /*background-color: #dfdcdc;*/
+}
+
+.submenuItem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.submenuItem:hover {
+    color: #007bff;
+}
+
+.submenuItem .icon {
+    font-size: 1.2rem;
+    margin-right: 10px;
+    color: #7c7b7b;
+}
