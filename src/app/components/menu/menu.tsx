@@ -6,26 +6,26 @@ import styles from "./menu.module.css";
 import Submenu from "@/app/components/submenu/submenu";
 
 const SidebarMenu = [
-    { icon: <FaHome />, label: "Início" },
-    { icon: <FaHome />, label: "Guia express" },
-    { icon: <FaHome />, label: "Meus pedidos" },
+    { icon: <FaHome />, label: "Início", path: "/" },
+    { icon: <FaHome />, label: "Guia express", path: "/guia-express" },
+    { icon: <FaHome />, label: "Meus pedidos", path: "/meus-pedidos" },
     {
         icon: <FaHome />,
         label: "Cadastro",
         submenus: [
-            { icon: <FaUsers />, label: "Grupo/Cliente" },
-            { icon: <FaBuilding />, label: "Empresa" },
-            { icon: <FaBuilding />, label: "Unidade" },
-            { icon: <FaBuilding />, label: "Setor" },
-            { icon: <FaBuilding />, label: "Função" },
-            { icon: <FaUsers />, label: "Funcionários" },
-            { icon: <FaFolder />, label: "Importados" },
-            { icon: <FaFileAlt />, label: "Relatórios da estrutura" },
+            { icon: <FaUsers />, label: "Grupo/Cliente", path: "/group" },
+            { icon: <FaBuilding />, label: "Empresa", path: "/cadastro/empresa" },
+            { icon: <FaBuilding />, label: "Unidade", path: "/cadastro/unidade" },
+            { icon: <FaBuilding />, label: "Setor", path: "/cadastro/setor" },
+            { icon: <FaBuilding />, label: "Função", path: "/cadastro/funcao" },
+            { icon: <FaUsers />, label: "Funcionários", path: "/cadastro/funcionarios" },
+            { icon: <FaFolder />, label: "Importados", path: "/cadastro/importados" },
+            { icon: <FaFileAlt />, label: "Relatórios da estrutura", path: "/cadastro/relatorios-estrutura" },
         ],
     },
-    { icon: <FaFileAlt />, label: "Certificado Digital" },
-    { icon: <FaCogs />, label: "Gestão de Segurança" },
-    { icon: <FaFolder />, label: "ArquivoMed" },
+    { icon: <FaFileAlt />, label: "Certificado Digital", path: "/certificado-digital" },
+    { icon: <FaCogs />, label: "Gestão de Segurança", path: "/gestao-seguranca" },
+    { icon: <FaFolder />, label: "ArquivoMed", path: "/arquivomed" },
 ];
 
 const Menu = () => {
