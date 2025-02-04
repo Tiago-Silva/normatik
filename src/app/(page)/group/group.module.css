@@ -3,6 +3,7 @@
 .container {
     width: 100%;
     right: 100%;
+    min-height: 88vh;
     background-color: #ffffff;
 
     padding: 5px;
