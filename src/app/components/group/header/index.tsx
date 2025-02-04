@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from "./index.module.css";
-import {FaBuilding, FaQuestionCircle} from "react-icons/fa";
+import {FaBuilding, FaPlus, FaQuestionCircle} from "react-icons/fa";
+import Button from "@/app/components/button/button";
 
 const HeaderGroup = () => {
     return (
@@ -14,7 +15,11 @@ const HeaderGroup = () => {
             </div>
 
             <div className={styles.right}>
-                <button className={styles.button}>Cadastrar</button>
+                <Button
+                    title={'Cadastrar'}
+                    icon={FaPlus}
+                    background={'#31b331'}
+                />
             </div>
 
         </div>
