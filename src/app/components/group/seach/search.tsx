@@ -4,6 +4,8 @@ import React, {useState} from 'react';
 import styles from './seach.module.css';
 import Input from "@/app/components/input/input";
 import Select from "@/app/components/select/select";
+import Button from "@/app/components/button/button";
+import {FaFileExport, FaSearch} from "react-icons/fa";
 
 const statusOptions = [
     { value: 'ativo', label: 'Ativo' },
@@ -21,6 +23,7 @@ const Search = () => {
 
     return (
         <div className={styles.container}>
+
             <div className={styles.wrapper}>
                 <Input label={'Nome'} width={'500px'}/>
                 <Select
@@ -28,6 +31,21 @@ const Search = () => {
                     options={statusOptions}
                     value={status}
                     onChange={handleStatusChange}
+                    width={'300px'}
+                />
+            </div>
+
+            <div className={styles.wrapper}>
+                <Button
+                    title={'Buscar'}
+                    icon={FaSearch}
+                    background={'#31b331'}
+                    width={'300px'}
+                />
+
+                <Button
+                    title={'Exportar'}
+                    icon={FaFileExport}
                     width={'300px'}
                 />
             </div>
