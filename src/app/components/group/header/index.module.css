@@ -42,19 +42,7 @@
 }
 
 .subTitle {
-    /*font-size: 1.2rem;*/
-    /*font-weight: bold;*/
     color: #918f8f;
     margin-bottom: 0;
     text-align: center;
-}
-
-.button {
-    background-color: #31b331;
-    border-radius: 15px;
-    padding: 10px;
-    border: none;
-    outline: none;
-    font-weight: 700;
-    cursor: pointer;
 }
