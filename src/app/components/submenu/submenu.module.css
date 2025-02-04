@@ -1,7 +1,6 @@
 .submenu {
     margin-top: 5px;
     list-style: none;
-    /*background-color: #dfdcdc;*/
 }
 
 .submenuItem {
@@ -21,4 +20,21 @@
     font-size: 1.2rem;
     margin-right: 10px;
     color: #7c7b7b;
+}
+
+.selected {
+    background-color: blue;
+    color: white;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.selected .icon {
+    font-size: 1.2rem;
+    margin-right: 10px;
+    color: white;
 }
