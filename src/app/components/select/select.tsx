@@ -6,13 +6,14 @@ interface Props {
     options: { value: string; label: string }[];
     value: string;
     onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+    width?: string;
 }
 
-const Select: React.FC<Props> = ({ label, options, value, onChange }) => {
+const Select: React.FC<Props> = ({ label, options, value, onChange, width }) => {
     return (
         <div className={styles.selectContainer}>
             <label className={styles.label}>{label}</label>
-            <select className={styles.select} value={value} onChange={onChange}>
+            <select className={styles.select} value={value} onChange={onChange} style={{ width }}>
                 {options.map((option) => (
                     <option key={option.value} value={option.value}>
                         {option.label}
