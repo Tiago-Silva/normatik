@@ -1,14 +1,22 @@
 :root {
-  --background: #ffffff;
+  --background: #f5f5f5;
+  --gray: #333;
+  --gray02: #7c7b7b;
+  --gray03: #918f8f;
+  --white: #ffffff;
+  --white-list: #f9f9f9;
+  --boder: #ddd;
+  --menu-hover: #0066cc;
+
   --foreground: #171717;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/*@media (prefers-color-scheme: dark) {*/
+/*  :root {*/
+/*    --background: #0a0a0a;*/
+/*    --foreground: #ededed;*/
+/*  }*/
+/*}*/
 
 html,
 body {

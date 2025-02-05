@@ -7,7 +7,7 @@
     align-items: center;
 
     padding: 10px;
-    background-color: #f5f5f5;
+    background-color: var(--background);
     border-radius: 10px;
 }
 
@@ -36,13 +36,13 @@
 .title {
     font-size: 1.2rem;
     font-weight: bold;
-    color: #333;
+    color: var(--gray);
     margin-bottom: 0;
     text-align: center;
 }
 
 .subTitle {
-    color: #918f8f;
+    color: var(--gray03);
     margin-bottom: 0;
     text-align: center;
 }

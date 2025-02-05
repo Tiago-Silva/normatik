@@ -13,18 +13,18 @@
 }
 
 .submenuItem:hover {
-    color: #007bff;
+    color: var(--menu-hover);
 }
 
 .submenuItem .icon {
     font-size: 1.2rem;
     margin-right: 10px;
-    color: #7c7b7b;
+    color: var(--gray02);
 }
 
 .selected {
-    background-color: blue;
-    color: white;
+    background-color: var(--menu-hover);
+    color: var(--white);
     width: 100%;
     display: flex;
     align-items: center;
@@ -36,5 +36,5 @@
 .selected .icon {
     font-size: 1.2rem;
     margin-right: 10px;
-    color: white;
+    color: var(--white);
 }

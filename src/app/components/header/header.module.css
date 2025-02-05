@@ -4,8 +4,8 @@
     align-items: center;
     justify-content: space-between;
     padding: 10px 20px;
-    background-color: #ffffff;
-    border-bottom: 1px solid #ddd;
+    background-color: var(--white);
+    border-bottom: 1px solid var(--boder);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -13,24 +13,24 @@
     background: none;
     border: none;
     font-size: 1.5rem;
-    color: #333;
+    color: var(--gray);
     cursor: pointer;
     outline: none;
 }
 
 .menuButton:hover {
-    color: #0066cc;
+    color: var(--menu-hover);
 }
 
 .title {
     font-size: 1.5rem;
     font-weight: bold;
-    color: #333;
+    color: var(--gray);
 }
 
 .avatar {
     width: 40px;
     height: 40px;
-    background-color: #ddd;
+    background-color: var(--boder);
     border-radius: 50%;
 }
