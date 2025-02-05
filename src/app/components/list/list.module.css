@@ -1,0 +1,29 @@
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.table th, .table td {
+    padding: 8px;
+    text-align: left;
+}
+
+.table th {
+    background-color: var(--background);
+    font-weight: bold;
+}
+
+.table tr:nth-child(even) {
+    background-color: var(--white-list);
+}
+
+.table tr:hover {
+    background-color: var(--border);
+}
+
+.table td:last-child {
+    text-align: right;
+    width: 1%;
+    white-space: nowrap;
+}

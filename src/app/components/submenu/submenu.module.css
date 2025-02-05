@@ -1,0 +1,40 @@
+.submenu {
+    margin-top: 5px;
+    list-style: none;
+}
+
+.submenuItem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.submenuItem:hover {
+    color: var(--menu-hover);
+}
+
+.submenuItem .icon {
+    font-size: 1.2rem;
+    margin-right: 10px;
+    color: var(--gray02);
+}
+
+.selected {
+    background-color: var(--menu-hover);
+    color: var(--white);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.selected .icon {
+    font-size: 1.2rem;
+    margin-right: 10px;
+    color: var(--white);
+}

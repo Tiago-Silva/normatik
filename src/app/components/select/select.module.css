@@ -1,0 +1,24 @@
+
+
+
+.selectContainer {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.label {
+    margin-bottom: 5px;
+    font-size: 1rem;
+    color: var(--gray);
+    text-align: left;
+}
+
+.select {
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background-color: var(--white);
+    font-size: 1rem;
+    color: var(--gray);
+}
