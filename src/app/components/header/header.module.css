@@ -5,7 +5,7 @@
     justify-content: space-between;
     padding: 10px 20px;
     background-color: var(--white);
-    border-bottom: 1px solid var(--boder);
+    border-bottom: 1px solid var(--border);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -31,6 +31,6 @@
 .avatar {
     width: 40px;
     height: 40px;
-    background-color: var(--boder);
+    background-color: var(--border);
     border-radius: 50%;
 }

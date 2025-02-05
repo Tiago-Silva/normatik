@@ -19,7 +19,7 @@
 }
 
 .table tr:hover {
-    background-color: var(--boder);
+    background-color: var(--border);
 }
 
 .table td:last-child {
