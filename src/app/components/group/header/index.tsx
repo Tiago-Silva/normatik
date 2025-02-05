@@ -3,7 +3,12 @@ import styles from "./index.module.css";
 import {FaBuilding, FaPlus, FaQuestionCircle} from "react-icons/fa";
 import Button from "@/app/components/button/button";
 
-const HeaderGroup = () => {
+interface Props {
+    isShow: boolean;
+    onClickButton: () => void;
+}
+
+const HeaderGroup: React.FC<Props> = ({ isShow, onClickButton }) => {
     return (
         <div className={styles.container}>
 
@@ -14,13 +19,16 @@ const HeaderGroup = () => {
                 <h5 className={styles.subTitle}>Gerencie os grupos de empresas/cliente cadastrados em sua assinatura</h5>
             </div>
 
-            <div className={styles.right}>
-                <Button
-                    title={'Cadastrar'}
-                    icon={FaPlus}
-                    background={'#31b331'}
-                />
-            </div>
+            {!isShow && (
+                <div className={styles.right}>
+                    <Button
+                        title={'Cadastrar'}
+                        icon={FaPlus}
+                        background={'#31b331'}
+                        onClick={onClickButton}
+                    />
+                </div>
+            )}
 
         </div>
     );
