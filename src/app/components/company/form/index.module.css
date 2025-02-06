@@ -1,0 +1,27 @@
+
+
+.container {
+    padding: 20px;
+    background-color: var(--background);
+    border-radius: 10px
+    /*box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);*/
+    /*margin-top: 20px;*/
+}
+
+.title {
+    color: var(--secondary-title);
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.title span {
+    color: red;
+}
+
+.wrapperButton {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
