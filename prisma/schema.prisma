@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model BusinessGroup {
+  id       String  @id @default(uuid())
+  name     String  @unique
+  status   Boolean
+  companies Company[]
+}
+
+model Company {
+  id              String        @id @default(uuid())
+  name            String        @unique
+  businessGroupId String?
+  businessGroup   BusinessGroup? @relation(fields: [businessGroupId], references: [id])
+  branches        Branch[]
+}
+
+model Branch {
+  id         String  @id @default(uuid())
+  name       String
+  companyId  String
+  company    Company @relation(fields: [companyId], references: [id])
+  sectors    Sector[]
+  employees  Employee[]
+}
+
+model Sector {
+  id        String  @id @default(uuid())
+  name      String
+  branchId  String
+  branch    Branch @relation(fields: [branchId], references: [id])
+  functions Function[]
+  employees Employee[]
+}
+
+model Function {
+  id       String  @id @default(uuid())
+  name     String
+  sectorId String
+  sector   Sector @relation(fields: [sectorId], references: [id])
+  employees Employee[]
+}
+
+model Employee {
+  id         String   @id @default(uuid())
+  name       String
+  functionId String
+  function   Function @relation(fields: [functionId], references: [id])
+  sectorId   String
+  sector     Sector @relation(fields: [sectorId], references: [id])
+  branchId   String
+  branch     Branch @relation(fields: [branchId], references: [id])
+}
