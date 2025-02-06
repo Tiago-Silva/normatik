@@ -14,9 +14,9 @@ const FormGroup: React.FC<Props> = ({ onClickButton }) => {
         <div className={styles.container}>
             <h2 className={styles.title}><FaFileAlt /> Dados do grupo/ Clientes <span>*</span>:</h2>
             <form>
-                <Input label={'Nome/Referência'} />
+                <Input label={'Nome/Referência'} value={''} onChange={() => {}}/>
                 
-                <ToggleSwitch label={'Status:'} />
+                <ToggleSwitch label={'Status:'} isChecked={false} onClick={() => {}}/>
 
                 <div className={styles.wrapperButton}>
                     <Button
