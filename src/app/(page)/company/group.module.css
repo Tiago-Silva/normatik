@@ -1,0 +1,10 @@
+
+
+.container {
+    width: 100%;
+    right: 100%;
+    min-height: 88vh;
+    background-color: var(--white);
+
+    padding: 5px;
+}

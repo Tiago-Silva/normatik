@@ -14,7 +14,7 @@ const SidebarMenu = [
         label: "Cadastro",
         submenus: [
             { icon: <FaUsers />, label: "Grupo/Cliente", path: "/group" },
-            { icon: <FaBuilding />, label: "Empresa", path: "/cadastro/empresa" },
+            { icon: <FaBuilding />, label: "Empresa", path: "/company" },
             { icon: <FaBuilding />, label: "Unidade", path: "/cadastro/unidade" },
             { icon: <FaBuilding />, label: "Setor", path: "/cadastro/setor" },
             { icon: <FaBuilding />, label: "Função", path: "/cadastro/funcao" },
