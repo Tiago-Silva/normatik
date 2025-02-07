@@ -6,9 +6,11 @@ const prisma = new PrismaClient();
 // Buscar um grupo empresarial por ID (GET)
 export async function GET(req: Request, { params }: { params: { id: string } }) {
     try {
-        const id = Number(params.id);
+        console.log(params.id);
+       
+
         const businessGroup = await prisma.businessGroup.findUnique({
-            where: { id: id.toString()},
+            where: { id: params.id},
         });
 
         if (!businessGroup) {

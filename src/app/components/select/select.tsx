@@ -9,6 +9,14 @@ interface Props {
     width?: string;
 }
 
+interface PropsCompany {
+    label: string;
+    options: { id: string,name: string; status: boolean }[];
+    value: string;
+    onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+    width?: string;
+}
+
 const Select: React.FC<Props> = ({ label, options, value, onChange, width }) => {
     return (
         <div className={styles.selectContainer}>
@@ -23,5 +31,18 @@ const Select: React.FC<Props> = ({ label, options, value, onChange, width }) => 
         </div>
     );
 };
-
+export const SelectCompany: React.FC<PropsCompany> = ({ label, options, value, onChange, width }) => {
+    return (
+        <div className={styles.selectContainer}>
+            <label className={styles.label}>{label}</label>
+            <select className={styles.select} value={value} onChange={onChange} style={{ width }}>
+                {options.map((option) => (
+                    <option key={option.name} value={option.id}>
+                        {option.name}
+                    </option>
+                ))}
+            </select>
+        </div>
+    );
+};
 export default Select;

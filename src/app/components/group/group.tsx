@@ -83,10 +83,7 @@ const GroupComponent = () => {
             ) : (
                 <>
                     <Search />
-                    <List
-                        columns={columns}
-                        data={data}
-                    />
+                    <List/>
                 </>
             )}
 
