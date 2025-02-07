@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './list.module.css';
 import { FaEdit } from 'react-icons/fa';
 import Button from '@/app/components/button/button';
+import { BusinessGroupService } from '@/app/service/BusinessGroupService';
 
 interface Column {
     key: string;
@@ -56,16 +57,31 @@ interface Props {
 const List: React.FC<Props> = ({ showEditButton = true }) => {
     const [data, setData] = useState();
     const [loading, setLoading] = useState(true);
+    const getData = async () => {
+        await fetch("/api/business-groups") // Chamando a API interna do Next.js
+        .then((res) => res.json())
+        .then((data) => {
+          setData(data);
+          setLoading(false);
+          console.log(data);
+        })
+        .catch((error) => console.error("Erro ao buscar dados:", error));
+    }
+    const deleteCompany = async (id:string) => {
+        const serviceDelete = new BusinessGroupService()
+        const response = await serviceDelete.deleteBusinessGroup(id);
+
+        if (response) {
+          getData();
+        } else {
+          console.error('Error deleting');
+        }
+        
+        
+    }
 
   useEffect(() => {
-    fetch("/api/business-groups") // Chamando a API interna do Next.js
-      .then((res) => res.json())
-      .then((data) => {
-        setData(data);
-        setLoading(false);
-        console.log(data);
-      })
-      .catch((error) => console.error("Erro ao buscar dados:", error));
+    getData()
   }, []);
 
   if (loading) return <p>Carregando...</p>;
@@ -105,6 +121,16 @@ const List: React.FC<Props> = ({ showEditButton = true }) => {
                         } }                            />
                 </td>
             )}
+            <td>
+                    <Button
+                        title={'Excluir'}
+                        icon={FaEdit}
+                        background={'#e00d1e'}
+                        onClick={() => deleteCompany(item.id)}
+                        width={'100px'} 
+                                               
+                        />
+                </td>
         </tr>
     ))}
     {/* <tr>{JSON.stringify(data, null, 2)}</tr> */}
