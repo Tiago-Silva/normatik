@@ -25,7 +25,9 @@ const Search = () => {
         <div className={styles.container}>
 
             <div className={styles.wrapper}>
-                <Input label={'Nome'} width={'500px'}/>
+                <Input label={'Nome'} width={'500px'} value={''} onChange={function (e: React.ChangeEvent<HTMLInputElement>): void {
+                    throw new Error('Function not implemented.');
+                } }/>
                 <Select
                     label={'Status'}
                     options={statusOptions}
@@ -40,14 +42,16 @@ const Search = () => {
                     title={'Buscar'}
                     icon={FaSearch}
                     background={'#31b331'}
-                    width={'300px'}
-                />
+                    width={'300px'} onClick={function (): void {
+                        throw new Error('Function not implemented.');
+                    } }                />
 
                 <Button
                     title={'Exportar'}
                     icon={FaFileExport}
-                    width={'300px'}
-                />
+                    width={'300px'} onClick={function (): void {
+                        throw new Error('Function not implemented.');
+                    } }                />
             </div>
         </div>
     );

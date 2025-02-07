@@ -7,10 +7,11 @@ import ToggleSwitch from "@/app/components/toggleSwitch/toggleSwitch";
 import { BusinessGroupService } from '@/app/service/BusinessGroupService';
 
 interface Props {
-    onClickButton: () => void
+    onClickButton: () => void;
+    setForm: () => void;
 }
 
-const FormGroup: React.FC<Props> = ({ onClickButton }) => {
+const FormGroup: React.FC<Props> = ({ onClickButton, setForm }) => {
     const [name, setName] = useState('');
     const [status, setStatus] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
@@ -20,7 +21,7 @@ const FormGroup: React.FC<Props> = ({ onClickButton }) => {
         const service = new BusinessGroupService();
         await service.createBusinessGroup({ name, status });
         setIsSaving(false);
-
+        setForm()
         await handleGetAllBusinessGroup();
     };
 
