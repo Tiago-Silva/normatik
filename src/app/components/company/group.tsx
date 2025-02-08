@@ -8,6 +8,7 @@ import List from "@/app/components/list/list";
 import FormGroup from "@/app/components/group/form";
 import HeaderCompany from './header';
 import SearchCompany from './seach/search';
+import FormCompany from './form';
 
 const data = [
     { codigo: '001', nome: 'Empresa A', status: 'Ativo' },
@@ -81,7 +82,7 @@ const CompanyComponent = () => {
             <HeaderCompany isShow={showForm} onClickButton={handleClickButton} />
 
             {showForm ? (
-                <FormGroup onClickButton={handleClickButton} />
+                <FormCompany onClickButton={handleClickButton} />
             ) : (
                 <>
 

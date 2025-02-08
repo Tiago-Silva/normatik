@@ -53,6 +53,8 @@ const SearchCompany = () => {
                     onChange={handleStatusChange}
                     width={'300px'}
                 />
+                <Input label={'CNPJ'} value={''} onChange={() => {}}/>
+
                 <Select
                     label={'Tipo de inscrição'}
                     options={TypesIns}

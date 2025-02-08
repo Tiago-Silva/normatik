@@ -4,17 +4,7 @@ import { FaEdit } from 'react-icons/fa';
 import Button from '@/app/components/button/button';
 import { BusinessGroupService } from '@/app/service/BusinessGroupService';
 
-interface Column {
-    key: string;
-    label: string;
-}
 
-interface ListItem {
-    codigo: string;
-    nome: string;
-    status: string;
-    [key: string]: string;
-}
 interface Props {
     showEditButton?: boolean;
 }
@@ -55,8 +45,9 @@ interface Props {
 //     );
 // };
 const List: React.FC<Props> = ({ showEditButton = true }) => {
-    const [data, setData] = useState();
+    const [data, setData] = useState<any[]>([]); 
     const [loading, setLoading] = useState(true);
+
     const getData = async () => {
         await fetch("/api/business-groups") // Chamando a API interna do Next.js
         .then((res) => res.json())
@@ -80,13 +71,13 @@ const List: React.FC<Props> = ({ showEditButton = true }) => {
         
     }
 
-  useEffect(() => {
-    getData()
-  }, []);
+    useEffect(() => {
+        getData()
+    }, []);
 
   if (loading) return <p>Carregando...</p>;
 
-  return (
+    return (
     // <div>
     //   <h1>Dados da API:</h1>
     //   <pre>{JSON.stringify(data, null, 2)}</pre>
@@ -133,7 +124,6 @@ const List: React.FC<Props> = ({ showEditButton = true }) => {
                 </td>
         </tr>
     ))}
-    {/* <tr>{JSON.stringify(data, null, 2)}</tr> */}
     </tbody>
 </table>)
 
