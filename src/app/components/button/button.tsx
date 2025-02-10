@@ -9,6 +9,7 @@ interface Props {
     width?: string;
     onClick: () => void;
     disabled?: boolean;
+    color?: string;
 }
 
 const Button: React.FC<Props> = (
@@ -19,12 +20,13 @@ const Button: React.FC<Props> = (
         width = '150px',
         onClick,
         disabled = false,
+        color = '#FFFFFF',
         ...rest
     }) => {
     return (
         <button
             className={styles.container}
-            style={{ background, width }}
+            style={{ background, width, color }}
             onClick={onClick}
             disabled={disabled}
             {...rest}

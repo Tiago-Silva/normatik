@@ -1,53 +1,54 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './index.module.css';
 import Input from "@/app/components/input/input";
-import { FaFileAlt, FaSave } from "react-icons/fa";
+import { FaFileAlt, FaSave, FaTimes } from "react-icons/fa";
 import Button from "@/app/components/button/button";
 import ToggleSwitch from "@/app/components/toggleSwitch/toggleSwitch";
 import { BusinessGroupService } from '@/app/service/BusinessGroupService';
+import { BusinessGroup } from "@/app/interface/BusinessGroup";
+import {useBusinessGroupForm} from "@/app/hooks/useBusinessGroupForm";
 
 interface Props {
     onClickButton: () => void;
-    setForm: () => void;
+    onShowForm: () => void;
+    businessGroup?: BusinessGroup;
 }
 
-const FormGroup: React.FC<Props> = ({ onClickButton, setForm }) => {
-    const [name, setName] = useState('');
-    const [status, setStatus] = useState(false);
-    const [isSaving, setIsSaving] = useState(false);
+const FormGroup: React.FC<Props> = ({ onClickButton, onShowForm, businessGroup }) => {
+    const {
+        name,
+        status,
+        isSaving,
+        setIsSaving,
+        handleNameChange,
+        handleStatusChange,
+    } = useBusinessGroupForm(businessGroup);
 
     const handleSave = async () => {
         setIsSaving(true);
         const service = new BusinessGroupService();
-        await service.createBusinessGroup({ name, status });
+
+        if (businessGroup) {
+            await service.updateBusinessGroup({ id: businessGroup.id, name, status });
+        } else {
+            await service.createBusinessGroup({ name, status });
+        }
         setIsSaving(false);
-        setForm()
-        await handleGetAllBusinessGroup();
+        onShowForm();
     };
 
-    const handleChecked = () => {
-        setStatus(!status);
-    };
-
-    const handleGetAllBusinessGroup = async () => {
-        const service = new BusinessGroupService();
-        const response = await service.getAllBusinessGroups();
-
-        console.log('List: ' + JSON.stringify(response));
-    };
-
-    const isFormValid = name.trim() !== '' && status !== null;
+    const isFormValid = name.trim() !== '';
 
     return (
         <div className={styles.container}>
             <h2 className={styles.title}><FaFileAlt /> Dados do grupo/client <span>*</span>:</h2>
             <form>
-                <Input label={'Nome/Referência'} value={name} onChange={(e) => setName(e.target.value)} />
-                <ToggleSwitch label={'Status:'} isChecked={status} onClick={handleChecked} />
+                <Input label={'Nome/Referência'} value={name} onChange={handleNameChange} />
+                <ToggleSwitch label={'Status:'} isChecked={status} onClick={handleStatusChange} />
 
                 <div className={styles.wrapperButton}>
                     <Button
-                        title={'Salvar Grupo/Cliente'}
+                        title={businessGroup ? 'Alterar' : 'Salvar Grupo/Cliente'}
                         icon={FaSave}
                         onClick={handleSave}
                         width={'250px'}
@@ -57,10 +58,11 @@ const FormGroup: React.FC<Props> = ({ onClickButton, setForm }) => {
 
                     <Button
                         title={'Cancelar/Voltar'}
-                        icon={FaSave}
+                        icon={FaTimes}
                         onClick={onClickButton}
                         width={'200px'}
                         background={'#ddd'}
+                        color={'gray'}
                     />
                 </div>
             </form>
