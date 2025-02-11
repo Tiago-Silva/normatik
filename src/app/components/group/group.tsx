@@ -13,6 +13,12 @@ const GroupComponent = () => {
     const [showForm, setShowForm] = useState(false);
     const [businessList, setBusinessList] = useState<BusinessGroup[]>([]);
     const [selectedBusinessGroup, setSelectedBusinessGroup] = useState<BusinessGroup | undefined>(undefined);
+    const [searchParams, setSearchParams] = useState<{ name: string, status: boolean }>({ name: '', status: true });
+    const [isClient, setIsClient] = useState(false);
+
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
 
     const handleGetAllBusinessGroup = async () => {
         const service = new BusinessGroupService();
@@ -35,9 +41,21 @@ const GroupComponent = () => {
         setShowForm(true);
     };
 
+    const handleSearchBusinessGroup = (name: string, status: boolean) => {
+        setSearchParams({ name, status });
+    };
+
     useEffect(() => {
         handleGetAllBusinessGroup().then();
     }, []);
+
+    if (!isClient) {
+        return null; // Render nothing on the server
+    }
+
+    const filteredBusinessList = businessList.filter(group =>
+        group.name.includes(searchParams.name) && group.status === searchParams.status
+    );
 
     return (
         <div className={styles.container}>
@@ -51,9 +69,9 @@ const GroupComponent = () => {
                 />
             ) : (
                 <>
-                    <Search />
+                    <Search onSearchBusinessGroup={handleSearchBusinessGroup} />
                     <List
-                        list={businessList}
+                        list={filteredBusinessList}
                         onEditBusinessGroup={handleEditBusinessGroup}
                     />
                 </>

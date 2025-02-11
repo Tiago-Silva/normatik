@@ -1,6 +1,6 @@
 
 export interface BusinessGroup {
-    id: string;
+    id: number;
     name: string;
     status: boolean;
 }
