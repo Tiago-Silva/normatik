@@ -2,42 +2,37 @@
 
 import React, {useEffect, useState} from 'react';
 import styles from './seach.module.css';
-import Input from "@/app/components/input/input";
 import Select, { SelectCompany } from "@/app/components/select/select";
 import Button from "@/app/components/button/button";
 import {FaFileExport, FaSearch} from "react-icons/fa";
+import Input from "@/app/components/input/input";
 
 const statusOptions = [
     { value: 'ativo', label: 'Ativo' },
     { value: 'desativado', label: 'Desativado' },
-    // Add more status options here
-];
-const TypesIns = [
-    { value: 'ativo', label: 'Pessoa Juridica' },
-    { value: 'desativado', label: 'Pessoa Fisica' },
-    // Add more status options here
 ];
 
 const SearchCompany = () => {
-    
-    const [data, setData] = useState([]);
-        const [loading, setLoading] = useState(true);
-    
-      useEffect(() => {
-        fetch("/api/business-groups") // Chamando a API interna do Next.js
-          .then((res) => res.json())
-          .then((data) => {
-            setData(data);
-            setLoading(false);
-            console.log(data);
-          })
-          .catch((error) => console.error("Erro ao buscar dados:", error));
-      }, []);
+    const [status, setStatus] = useState<boolean>(true);
+    const [groupName, setGroupName] = useState('');
+    const [companyName, setCompanyName] = useState('');
 
-    const [status, setStatus] = useState('ativo');
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+    fetch("/api/business-groups") // Chamando a API interna do Next.js
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data);
+        setLoading(false);
+        console.log(data);
+      })
+      .catch((error) => console.error("Erro ao buscar dados:", error));
+    }, []);
 
     const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setStatus(event.target.value);
+        setStatus(event.target.value === 'true');
     };
     
     
@@ -45,29 +40,24 @@ const SearchCompany = () => {
         <div className={styles.container}>
         
             <div className={styles.wrapper}>
-                
                 <SelectCompany
-                    label={'Grupo/Empresa'}
+                    label={'Grupo/Cliente'}
                     options={data}
-                    value={status}
-                    onChange={handleStatusChange}
+                    value={groupName}
+                    onChange={(e) => setGroupName(e.target.value)}
                     width={'300px'}
                 />
                 <Select
-                    label={'Tipo de inscrição'}
-                    options={TypesIns}
-                    value={status}
-                    onChange={handleStatusChange}
-                    width={'300px'}
-                />
-
-                <Select
-                    label={'CNPJ'}
+                    label={'Status'}
                     options={statusOptions}
-                    value={status}
+                    value={status.toString()}
                     onChange={handleStatusChange}
                     width={'300px'}
                 />
+            </div>
+
+            <div className={styles.wrapper}>
+                <Input label={'Nome'} width={'500px'} value={companyName} onChange={(e) => setCompanyName(e.target.value)}/>
             </div>
 
             <div className={styles.wrapper}>

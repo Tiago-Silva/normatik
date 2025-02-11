@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from './group.module.css';
-import CompanyComponent from '@/app/components/company/group';
+import styles from './company.module.css';
+import CompanyComponent from "@/app/components/company/companyComponent";
 
 const Company = () => {
     return (
