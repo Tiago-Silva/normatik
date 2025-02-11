@@ -14,24 +14,24 @@ datasource db {
 }
 
 model BusinessGroup {
-  id       String  @id @default(uuid())
-  name     String  @unique
+  id       Int      @id @default(autoincrement())
+  name     String
   status   Boolean
   companies Company[]
 }
 
 model Company {
-  id              String        @id @default(uuid())
-  name            String        @unique
-  businessGroupId String?
-  businessGroup   BusinessGroup? @relation(fields: [businessGroupId], references: [id])
+  id              Int             @id @default(autoincrement())
+  name            String
+  businessGroupId Int?
+  businessGroup   BusinessGroup?  @relation(fields: [businessGroupId], references: [id])
   branches        Branch[]
 }
 
 model Branch {
   id         String  @id @default(uuid())
   name       String
-  companyId  String
+  companyId  Int
   company    Company @relation(fields: [companyId], references: [id])
   sectors    Sector[]
   employees  Employee[]
