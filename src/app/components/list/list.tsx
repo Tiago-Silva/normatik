@@ -2,43 +2,54 @@ import React from 'react';
 import styles from './list.module.css';
 import { FaEdit } from 'react-icons/fa';
 import Button from '@/app/components/button/button';
-import { BusinessGroup } from "@/app/interface/BusinessGroup";
 
-interface Props {
-    showEditButton?: boolean;
-    list: BusinessGroup[];
-    onEditBusinessGroup: (businessGroup: BusinessGroup) => void;
+interface Column<T> {
+    header: string;
+    accessor: (item: T) => React.ReactNode;
 }
 
-const List: React.FC<Props> = ({ showEditButton = true, list, onEditBusinessGroup }) => {
+interface Props<T> {
+    showEditButton?: boolean;
+    list: T[];
+    columns: Column<T>[];
+    onEditItem?: (item: T) => void;
+}
+
+const List = <T,>(
+    {
+        showEditButton = true,
+        list,
+        columns,
+        onEditItem
+    }: Props<T>) => {
     return (
         <table className={styles.table}>
             <thead>
-            <tr>
-                <th>Cód: Grupo</th>
-                <th>Nome</th>
-                <th>Status</th>
-            </tr>
+                <tr>
+                    {columns.map((column, index) => (
+                        <th key={index}>{column.header}</th>
+                    ))}
+                </tr>
             </thead>
             <tbody>
-            {list.map((item: BusinessGroup) => (
-                <tr key={item.id}>
-                    <td>{item.id}</td>
-                    <td>{item.name}</td>
-                    <td>{item.status ? "Ativo" : "Inativo"}</td>
-                    {showEditButton && (
-                        <td>
-                            <Button
-                                title={'Editar'}
-                                icon={FaEdit}
-                                background={'#31b331'}
-                                width={'100px'}
-                                onClick={() => onEditBusinessGroup(item)}
-                            />
-                        </td>
-                    )}
-                </tr>
-            ))}
+                {list.map((item, index) => (
+                    <tr key={index}>
+                        {columns.map((column, colIndex) => (
+                            <td key={colIndex}>{column.accessor(item)}</td>
+                        ))}
+                        {showEditButton && onEditItem && (
+                            <td>
+                                <Button
+                                    title={'Editar'}
+                                    icon={FaEdit}
+                                    background={'#31b331'}
+                                    width={'100px'}
+                                    onClick={() => onEditItem(item)}
+                                />
+                            </td>
+                        )}
+                    </tr>
+                ))}
             </tbody>
         </table>
     );
