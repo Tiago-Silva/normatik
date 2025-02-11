@@ -9,7 +9,7 @@ interface Props {
     onClickButton: () => void
 }
 
-const FormGroup: React.FC<Props> = ({ onClickButton }) => {
+const FormCompany: React.FC<Props> = ({ onClickButton }) => {
     return (
         <div className={styles.container}>
             <h2 className={styles.title}><FaFileAlt /> Dados do grupo/ Clientes <span>*</span>:</h2>
@@ -40,4 +40,4 @@ const FormGroup: React.FC<Props> = ({ onClickButton }) => {
     );
 };
 
-export default FormGroup;
+export default FormCompany;
