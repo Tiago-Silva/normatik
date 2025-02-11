@@ -6,9 +6,17 @@ interface Props {
     value: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     width?: string;
+    disabled?: boolean;
 }
 
-const Input: React.FC<Props> = ({ label, value, onChange,  width }) => {
+const Input: React.FC<Props> = (
+    {
+        label,
+        value,
+        onChange,
+        width,
+        disabled
+    }) => {
     return (
         <div className={styles.inputContainer}>
             <label className={styles.label}>{label}</label>
@@ -17,6 +25,7 @@ const Input: React.FC<Props> = ({ label, value, onChange,  width }) => {
                 style={{ width }}
                 value={value}
                 onChange={onChange}
+                disabled={disabled}
             />
         </div>
     );
