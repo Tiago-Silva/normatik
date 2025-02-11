@@ -9,6 +9,12 @@ import FormGroup from "@/app/components/group/form";
 import { BusinessGroupService } from "@/app/service/BusinessGroupService";
 import { BusinessGroup } from "@/app/interface/BusinessGroup";
 
+const columns = [
+    { header: 'Cód: Grupo', accessor: (item: BusinessGroup) => item.id },
+    { header: 'Nome', accessor: (item: BusinessGroup) => item.name },
+    { header: 'Status', accessor: (item: BusinessGroup) => (item.status ? "Ativo" : "Inativo") },
+];
+
 const GroupComponent = () => {
     const [showForm, setShowForm] = useState(false);
     const [businessList, setBusinessList] = useState<BusinessGroup[]>([]);
@@ -70,9 +76,10 @@ const GroupComponent = () => {
             ) : (
                 <>
                     <Search onSearchBusinessGroup={handleSearchBusinessGroup} />
-                    <List
+                    <List<BusinessGroup>
                         list={filteredBusinessList}
-                        onEditBusinessGroup={handleEditBusinessGroup}
+                        columns={columns}
+                        onEditItem={handleEditBusinessGroup}
                     />
                 </>
             )}
