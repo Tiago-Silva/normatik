@@ -23,6 +23,10 @@ model BusinessGroup {
 model Company {
   id              Int             @id @default(autoincrement())
   name            String
+  cnpj            String
+  address         String
+  doctor          String
+  status          Boolean
   businessGroupId Int?
   businessGroup   BusinessGroup?  @relation(fields: [businessGroupId], references: [id])
   branches        Branch[]
