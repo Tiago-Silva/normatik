@@ -1,3 +1,5 @@
+import {BusinessGroup, NewBusinessGroup} from "@/app/interface/BusinessGroup";
+
 export class BusinessGroupService {
   private async request<T>(url: string, options: RequestInit): Promise<T> {
     const response = await fetch(url, options);
@@ -7,7 +9,7 @@ export class BusinessGroupService {
     return response.json();
   }
 
-  async createBusinessGroup(data: { name: string; status: boolean }) {
+  async createBusinessGroup(data: NewBusinessGroup) {
     return this.request('/api/business-groups', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -19,15 +21,18 @@ export class BusinessGroupService {
     return this.request(`/api/business-groups/${id}`, { method: 'GET' });
   }
 
-  async getAllBusinessGroups() {
+  async getAllBusinessGroups(): Promise<BusinessGroup[]> {
     return this.request('/api/business-groups', { method: 'GET' });
   }
 
-  async updateBusinessGroup(id: string, data: Partial<{ name: string; status: boolean }>) {
-    return this.request(`/api/business-groups/${id}`, {
+  async updateBusinessGroup(businessGroup: BusinessGroup) {
+    return this.request(`/api/business-groups/${businessGroup.id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        name: businessGroup.name,
+        status: businessGroup.status,
+      }),
     });
   }
 

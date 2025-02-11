@@ -6,11 +6,11 @@ const prisma = new PrismaClient();
 // Buscar um grupo empresarial por ID (GET)
 export async function GET(req: Request, { params }: { params: { id: string } }) {
     try {
-        console.log(params.id);
-       
+        const id = parseInt(params.id, 10);
+        console.log(id);
 
         const businessGroup = await prisma.businessGroup.findUnique({
-            where: { id: params.id},
+            where: { id },
         });
 
         if (!businessGroup) {
@@ -27,11 +27,11 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
 // Atualizar um grupo empresarial (PUT)
 export async function PUT(req: Request, { params }: { params: { id: string } }) {
     try {
-        const { id } = params;
+        const id = parseInt(params.id, 10);
         const data = await req.json();
 
         const updatedBusinessGroup = await prisma.businessGroup.update({
-            where: { id: id.toString()},
+            where: { id },
             data,
         });
 
@@ -45,10 +45,10 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
 // Deletar um grupo empresarial (DELETE)
 export async function DELETE(req: Request, { params }: { params: { id: string } }) {
     try {
-        const { id } = params;
+        const id = parseInt(params.id, 10);
 
         await prisma.businessGroup.delete({
-            where: { id: id.toString()},
+            where: { id },
         });
 
         return NextResponse.json({ message: 'Grupo de negócios deletado com sucesso' }, { status: 200 });
