@@ -15,7 +15,7 @@ datasource db {
 
 model BusinessGroup {
   id       Int      @id @default(autoincrement())
-  name     String
+  name     String   @unique
   status   Boolean
   companies Company[]
 }
