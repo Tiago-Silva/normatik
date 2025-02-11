@@ -5,7 +5,7 @@ import Menu from "@/app/components/menu/menu";
 const Sidebar = () => {
     return (
         <aside className={styles.container}>
-            <div className={styles.sidebarHeader}>ACSA Gestão</div>
+            <div className={styles.sidebarHeader}>SGSST Gestão</div>
             <Menu />
         </aside>
     );

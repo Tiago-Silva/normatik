@@ -8,7 +8,7 @@ const Header = () => {
             <button className={styles.menuButton}>
                 <AiOutlineMenu />
             </button>
-            <h1 className={styles.title}>Indexmed</h1>
+            <h1 className={styles.title}>Gerador de PGR</h1>
             <div className={styles.avatar} />
         </header>
     );
