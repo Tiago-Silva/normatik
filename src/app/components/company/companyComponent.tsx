@@ -1,12 +1,15 @@
 'use client';
 
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './company-component.module.css';
 import HeaderCompany from './header';
 import SearchCompany from './seach/search';
 import FormCompany from "@/app/components/company/form";
 import List from "@/app/components/list/list";
 import {Company} from "@/app/interface/Company";
+import {CompanyService} from "@/app/service/CompanyService";
+import {BusinessGroup} from "@/app/interface/BusinessGroup";
+import {BusinessGroupService} from "@/app/service/BusinessGroupService";
 
 const columns = [
     { header: 'Cód: Empresa', accessor: (item: Company) => item.id },
@@ -15,15 +18,10 @@ const columns = [
     { header: 'Status', accessor: (item: Company) => (item.status ? "Ativo" : "Inativo") },
 ];
 
-const staticCompanyList: Company[] = [
-    { id: 1, name: 'Empresa A', cnpj: '00.000.000/0001-00', address: 'Endereço A', doctor: 'Dr. A', status: true },
-    { id: 2, name: 'Empresa B', cnpj: '00.000.000/0002-00', address: 'Endereço B', doctor: 'Dr. B', status: false },
-    { id: 3, name: 'Empresa C', cnpj: '00.000.000/0003-00', address: 'Endereço C', doctor: 'Dr. C', status: true },
-];
-
 const CompanyComponent = () => {
     const [showForm, setShowForm] = useState(false);
-    const [companyList, setCompanyList] = useState<Company[]>(staticCompanyList);
+    const [companyList, setCompanyList] = useState<Company[]>([]);
+    const [businessGroup, setBusinessGroup] = useState<BusinessGroup | undefined>(undefined);
 
     const handleClickButton = () => {
         setShowForm(!showForm);
@@ -33,13 +31,30 @@ const CompanyComponent = () => {
         console.log('Aquiiii: ');
     }
 
+    const handleGetAllCompany = async () => {
+        const service = new CompanyService();
+        const data = await service.getAllCompanies();
+        setCompanyList(data);
+    }
+
+    const handleGetllBusinessGroup = async () => {
+        const businessService = new BusinessGroupService();
+        const data = await businessService.getBusinessGroupById('1') as BusinessGroup;
+        setBusinessGroup(data);
+    }
+
+    useEffect(() => {
+        handleGetAllCompany().then();
+        handleGetllBusinessGroup().then();
+    }, []);
+
     return (
         <div className={styles.container}>
 
-            <HeaderCompany />
+            <HeaderCompany isShow={showForm} onClickButton={handleClickButton}/>
 
             {showForm ? (
-                <FormCompany onClickButton={handleClickButton} />
+                <FormCompany onClickButton={handleClickButton} group={businessGroup} />
             ) : (
                 <>
                     <SearchCompany />

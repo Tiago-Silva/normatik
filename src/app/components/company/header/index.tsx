@@ -1,8 +1,14 @@
 import React from 'react';
 import styles from "./index.module.css";
-import {FaBuilding} from "react-icons/fa";
+import {FaBuilding, FaPlus} from "react-icons/fa";
+import Button from "@/app/components/button/button";
 
-const HeaderCompany = () => {
+interface Props {
+    isShow: boolean;
+    onClickButton: () => void;
+}
+
+const HeaderCompany: React.FC<Props> = ({ isShow, onClickButton }) => {
     return (
         <div className={styles.container}>
 
@@ -12,6 +18,17 @@ const HeaderCompany = () => {
                 </div>
                 <h5 className={styles.subTitle}>Gerencie as empresas e/ou empregadores cadastrados em sua assunatura</h5>
             </div>
+
+            {!isShow && (
+                <div className={styles.right}>
+                    <Button
+                        title={'Cadastrar'}
+                        icon={FaPlus}
+                        background={'#31b331'}
+                        onClick={onClickButton}
+                    />
+                </div>
+            )}
         </div>
     );
 };
