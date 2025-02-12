@@ -9,7 +9,6 @@ import List from "@/app/components/list/list";
 import {Company} from "@/app/interface/Company";
 import {CompanyService} from "@/app/service/CompanyService";
 import {BusinessGroup} from "@/app/interface/BusinessGroup";
-import {BusinessGroupService} from "@/app/service/BusinessGroupService";
 
 const columns = [
     { header: 'Cód: Empresa', accessor: (item: Company) => item.id },
@@ -37,15 +36,8 @@ const CompanyComponent = () => {
         setCompanyList(data);
     }
 
-    const handleGetllBusinessGroup = async () => {
-        const businessService = new BusinessGroupService();
-        const data = await businessService.getBusinessGroupById('1') as BusinessGroup;
-        setBusinessGroup(data);
-    }
-
     useEffect(() => {
         handleGetAllCompany().then();
-        handleGetllBusinessGroup().then();
     }, []);
 
     return (
@@ -57,7 +49,7 @@ const CompanyComponent = () => {
                 <FormCompany onClickButton={handleClickButton} group={businessGroup} />
             ) : (
                 <>
-                    <SearchCompany />
+                    <SearchCompany onSelectBusinessGroup={setBusinessGroup}/>
                     <List<Company>
                         list={companyList}
                         columns={columns}
