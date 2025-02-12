@@ -14,26 +14,40 @@ const statusOptions = [
     { value: 'desativado', label: 'Desativado' },
 ];
 
-const SearchCompany = () => {
+interface Props {
+    onSelectBusinessGroup: (businessGroup: BusinessGroup) => void;
+}
+
+const SearchCompany: React.FC<Props> = ({ onSelectBusinessGroup }) => {
     const [status, setStatus] = useState<boolean>(true);
     const [groupName, setGroupName] = useState('');
     const [companyName, setCompanyName] = useState('');
 
     const [businessGroupList, setBusinessGroupList] = useState<BusinessGroup[]>([]);
-    const [loading, setLoading] = useState(true);
 
-    const handleGetllBusinessGroup = async () => {
+    const handleGetAllBusinessGroup = async () => {
         const businessService = new BusinessGroupService();
         const data = await businessService.getAllBusinessGroups();
         setBusinessGroupList(data);
     }
+
+    const handleSelectBusinessGroup = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const selectedGroupId = Number(event.target.value);
+        const selectedGroup = businessGroupList.find(group => group.id === selectedGroupId);
+        if (selectedGroup) {
+            setGroupName(selectedGroup.name);
+            onSelectBusinessGroup(selectedGroup);
+        }
+    };
     
     const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setStatus(event.target.value === 'true');
     };
+
     useEffect(() => {
-        handleGetllBusinessGroup().then();
-    }, []);    
+        handleGetAllBusinessGroup().then();
+    }, []);
+
     return (
         <div className={styles.container}>
         
@@ -42,7 +56,7 @@ const SearchCompany = () => {
                     label={'Grupo/Cliente'}
                     options={businessGroupList}
                     value={groupName}
-                    onChange={(e) => setGroupName(e.target.value)}
+                    onChange={handleSelectBusinessGroup}
                     width={'300px'}
                 />
                 <Select
