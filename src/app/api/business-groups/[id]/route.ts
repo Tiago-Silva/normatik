@@ -45,12 +45,14 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
 // Deletar um grupo empresarial (DELETE)
 export async function DELETE(req: Request, { params }: { params: { id: string } }) {
     try {
-        const id = parseInt(params.id, 10);
+        
+        if (!params.id) {
+            return NextResponse.json({ error: 'ID inválido' }, { status: 400 });
+        }
 
         await prisma.businessGroup.delete({
-            where: { id },
+            where: { id: params.id },
         });
-
         return NextResponse.json({ message: 'Grupo de negócios deletado com sucesso' }, { status: 200 });
     } catch (error) {
         console.log(error);

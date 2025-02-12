@@ -53,41 +53,44 @@ const SearchCompany = () => {
                     onChange={handleStatusChange}
                     width={'300px'}
                 />
-                <Input label={'CNPJ'} value={''} onChange={() => {}}/>
-
-                <Select
+                 <Select
                     label={'Tipo de inscrição'}
                     options={TypesIns}
                     value={status}
                     onChange={handleStatusChange}
                     width={'300px'}
                 />
+                <Input label={'CNPJ'} value={''} onChange={() => {}}/>
+                <Input label={'Razão Social'} value={''} onChange={() => {}}/>
+                <Input label={'Nome fantasia'} value={''} onChange={() => {}}/>
+                <Input label={'Médico Responsavél'} value={''} onChange={() => {}}/>
 
+                <div className={styles.box_buttons}>
+                    <Button
+                        title={'Ver/Editar dados'}
+                        icon={FaSearch}
+                        background={'#b1b331'}
+                        width={'180px'} onClick={function (): void {
+                            throw new Error('Function not implemented.');
+                        } }   />  
+                        <Button
+                        title={'Cadastrar novo'}
+                        icon={FaSearch}
+                        background={'#31b331'}
+                        width={'180px'} onClick={function (): void {
+                            throw new Error('Function not implemented.');
+                        } }   />  
+                </div>
                 <Select
-                    label={'CNPJ'}
-                    options={statusOptions}
+                    label={'Grupo do eSocial'}
+                    options={TypesIns}
                     value={status}
                     onChange={handleStatusChange}
                     width={'300px'}
                 />
             </div>
 
-            <div className={styles.wrapper}>
-                <Button
-                    title={'Buscar'}
-                    icon={FaSearch}
-                    background={'#31b331'}
-                    width={'300px'} onClick={function (): void {
-                        throw new Error('Function not implemented.');
-                    } }                />
-
-                <Button
-                    title={'Exportar'}
-                    icon={FaFileExport}
-                    width={'300px'} onClick={function (): void {
-                        throw new Error('Function not implemented.');
-                    } }                />
-            </div>
+          
         </div>
     );
 };

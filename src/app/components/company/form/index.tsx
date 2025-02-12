@@ -4,12 +4,16 @@ import Input from "@/app/components/input/input";
 import {FaFileAlt, FaSave} from "react-icons/fa";
 import Button from "@/app/components/button/button";
 import ToggleSwitch from "@/app/components/toggleSwitch/toggleSwitch";
+import { BusinessGroup } from '@/app/interface/BusinessGroup';
 
 interface Props {
-    onClickButton: () => void
+    onClickButton: () => void;
+    onShowForm: () => void;
+    businessGroup?: BusinessGroup;
 }
 
-const FormCompany: React.FC<Props> = ({ onClickButton }) => {
+const FormCompany: React.FC<Props> = ({ onClickButton, onShowForm, businessGroup }) => {
+   
     return (
         <div className={styles.container}>
             <h2 className={styles.title}><FaFileAlt /> Dados do grupo/ Clientes <span>*</span>:</h2>
