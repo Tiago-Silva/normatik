@@ -6,6 +6,8 @@ import Select, { SelectCompany } from "@/app/components/select/select";
 import Button from "@/app/components/button/button";
 import {FaFileExport, FaSearch} from "react-icons/fa";
 import Input from "@/app/components/input/input";
+import { BusinessGroup } from '@/app/interface/BusinessGroup';
+import { BusinessGroupService } from '@/app/service/BusinessGroupService';
 
 const statusOptions = [
     { value: 'ativo', label: 'Ativo' },
@@ -17,34 +19,37 @@ const SearchCompany = () => {
     const [groupName, setGroupName] = useState('');
     const [companyName, setCompanyName] = useState('');
 
-    const [data, setData] = useState([]);
+    const [businessGroupList, setBusinessGroupList] = useState<BusinessGroup[]>([]);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-    fetch("/api/business-groups") // Chamando a API interna do Next.js
-      .then((res) => res.json())
-      .then((data) => {
-        setData(data);
-        setLoading(false);
-        console.log(data);
-      })
-      .catch((error) => console.error("Erro ao buscar dados:", error));
-    }, []);
-
+    const handleGetllBusinessGroup = async () => {
+        const businessService = new BusinessGroupService();
+        const data = await businessService.getAllBusinessGroups();
+        setBusinessGroupList(data);
+    }
+    
     const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setStatus(event.target.value === 'true');
     };
-    
-    
+    useEffect(() => {
+        handleGetllBusinessGroup().then();
+    }, []);    
     return (
         <div className={styles.container}>
         
             <div className={styles.wrapper}>
                 <SelectCompany
                     label={'Grupo/Cliente'}
-                    options={data}
+                    options={businessGroupList}
                     value={groupName}
                     onChange={(e) => setGroupName(e.target.value)}
+                    width={'300px'}
+                />
+                <Select
+                    label={'Status'}
+                    options={statusOptions}
+                    value={status.toString()}
+                    onChange={handleStatusChange}
                     width={'300px'}
                 />
                 <Select

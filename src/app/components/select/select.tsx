@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './select.module.css';
+import { BusinessGroup } from '@/app/interface/BusinessGroup';
 
 interface Props {
     label: string;
@@ -11,7 +12,7 @@ interface Props {
 
 interface PropsCompany {
     label: string;
-    options: { id: string,name: string; status: boolean }[];
+    options: BusinessGroup[];
     value: string;
     onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
     width?: string;
