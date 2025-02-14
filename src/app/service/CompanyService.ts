@@ -32,9 +32,15 @@ export class CompanyService {
             body: JSON.stringify({
                 name: company.name,
                 cnpj: company.cnpj,
-                address: company.address,
                 doctor: company.doctor,
                 status: company.status,
+                registrationType: company.registrationType,
+                fantasyName: company.fantasyName,
+                cnae: company.cnae,
+                cep: company.cep,
+                rule: company.rule,
+                esocialGroup: company.esocialGroup,
+                businessGroupId: company.businessGroupId,
             }),
         });
     }
