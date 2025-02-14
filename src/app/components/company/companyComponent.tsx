@@ -22,7 +22,7 @@ const CompanyComponent = () => {
     const [companyList, setCompanyList] = useState<Company[]>([]);
     const [businessGroup, setBusinessGroup] = useState<BusinessGroup | undefined>(undefined);
 
-    const handleClickButton = () => {
+    const handleShowForm = () => {
         setShowForm(!showForm);
     };
 
@@ -43,10 +43,10 @@ const CompanyComponent = () => {
     return (
         <div className={styles.container}>
 
-            <HeaderCompany isShow={showForm} onClickButton={handleClickButton}/>
+            <HeaderCompany isShow={showForm} onClickButton={handleShowForm}/>
 
             {showForm ? (
-                <FormCompany onClickButton={handleClickButton} group={businessGroup} />
+                <FormCompany onShowForm={handleShowForm} group={businessGroup} />
             ) : (
                 <>
                     <SearchCompany onSelectBusinessGroup={setBusinessGroup}/>
