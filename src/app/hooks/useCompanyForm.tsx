@@ -1,24 +1,14 @@
+// src/app/hooks/useCompanyForm.tsx
+
 import { useState, useEffect } from 'react';
 import { BusinessGroup } from '@/app/interface/BusinessGroup';
-
-interface FormState {
-    groupName: string;
-    registrationType: string;
-    cnpj: string;
-    name: string;
-    fantasyName: string;
-    cnae: string;
-    cep: string;
-    doctor: string;
-    status: boolean;
-    rule: boolean;
-    esocialGroup: string;
-}
+import { CompanyService } from "@/app/service/CompanyService";
+import { NewCompany } from '@/app/interface/Company';
 
 export const useCompanyForm = (initialGroup?: BusinessGroup) => {
-    const [formState, setFormState] = useState<FormState>({
-        groupName: initialGroup?.name || '',
-        registrationType: '',
+    const [formState, setFormState] = useState<NewCompany>({
+        businessGroup: initialGroup || { id: 0, name: '', status: false },
+        registrationType: 'cnpj',
         cnpj: '',
         name: '',
         fantasyName: '',
@@ -27,34 +17,41 @@ export const useCompanyForm = (initialGroup?: BusinessGroup) => {
         doctor: '',
         status: false,
         rule: false,
-        esocialGroup: '',
+        esocialGroup: 'grupo01',
     });
 
     useEffect(() => {
         if (initialGroup) {
             setFormState(prevState => ({
                 ...prevState,
-                groupName: initialGroup.name,
+                businessGroup: initialGroup,
                 status: initialGroup.status,
             }));
         }
     }, [initialGroup]);
 
-    const handleInputChange = (field: keyof FormState) => (e: React.ChangeEvent<HTMLInputElement>) => {
-        setFormState(prevState => ({ ...prevState, [field]: e.target.value }));
+    const handleInputChange = (field: keyof NewCompany) => (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { value } = e.target;
+        setFormState(prevState => ({ ...prevState, [field]: value }));
     };
 
-    const handleSelectChange = (field: keyof FormState) => (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setFormState(prevState => ({ ...prevState, [field]: e.target.value }));
+    const handleSelectChange = (field: keyof NewCompany) => (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const value = e.target.value;
+        setFormState(prevState => ({ ...prevState, [field]: value }));
     };
 
-    const handleToggleChange = (field: keyof FormState) => () => {
+    const handleToggleChange = (field: keyof NewCompany) => () => {
         setFormState(prevState => ({ ...prevState, [field]: !prevState[field] }));
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Handle form submission logic
+        const service = new CompanyService();
+        try {
+            await service.createCompany(formState);
+        } catch (error) {
+            console.error('Error creating company:', error);
+        }
     };
 
     return {
