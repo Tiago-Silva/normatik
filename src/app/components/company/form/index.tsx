@@ -28,10 +28,10 @@ const esocialGroupOptions = [
 
 interface Props {
     group?: BusinessGroup;
-    onClickButton: () => void;
+    onShowForm: () => void;
 }
 
-const FormCompany: React.FC<Props> = ({ group, onClickButton }) => {
+const FormCompany: React.FC<Props> = ({ group, onShowForm }) => {
     const {
         formState,
         handleInputChange,
@@ -40,14 +40,19 @@ const FormCompany: React.FC<Props> = ({ group, onClickButton }) => {
         handleSubmit,
     } = useCompanyForm(group);
 
+    const handleSubmitHere = async (e: React.FormEvent) => {
+        await handleSubmit(e);
+        onShowForm();
+    };
+
     return (
         <div className={styles.container}>
             <h2 className={styles.title}><FaFileAlt /> Dados da Empresa / Empregador <span>*</span>:</h2>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmitHere}>
                 <Input
                     label={'Grupo/Cliente:'}
-                    value={formState.groupName}
-                    onChange={() => {}} disabled={true}/>
+                    value={formState.businessGroup.name}
+                    onChange={handleInputChange('businessGroup')} disabled={true}/>
                 <Select
                     label={'Tipo de inscrição no eSocial:'}
                     options={registrationTypeOptions}
@@ -85,7 +90,7 @@ const FormCompany: React.FC<Props> = ({ group, onClickButton }) => {
                     <Button
                         title={'Cancelar/Voltar'}
                         icon={FaSave}
-                        onClick={onClickButton}
+                        onClick={onShowForm}
                         width={'200px'}
                         background={'#ddd'}
                     />
