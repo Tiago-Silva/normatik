@@ -21,16 +21,21 @@ model BusinessGroup {
 }
 
 model Company {
-  id              Int             @id @default(autoincrement())
-  name            String
-  cnpj            String
-  address         String
-  doctor          String
-  status          Boolean
-  businessGroupId Int?
-  businessGroup   BusinessGroup?  @relation(fields: [businessGroupId], references: [id])
-  branches        Branch[]
-}
+    id              Int             @id @default(autoincrement())
+    name            String
+    cnpj            String
+    doctor          String
+    status          Boolean
+    businessGroupId Int?
+    businessGroup   BusinessGroup?  @relation(fields: [businessGroupId], references: [id])
+    branches        Branch[]
+    registrationType String
+    fantasyName     String
+    cnae            String
+    cep             String
+    rule            Boolean
+    esocialGroup    String
+  }
 
 model Branch {
   id         String  @id @default(uuid())
