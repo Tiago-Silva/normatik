@@ -21,6 +21,7 @@ const SearchCompany: React.FC<Props> = ({ businessGroup, onSelectBusinessGroup }
         const businessService = new BusinessGroupService();
         const data = await businessService.getAllBusinessGroups();
         setBusinessGroupList(data);
+        onSelectBusinessGroup(data[0]);
     }
 
     const handleSelectBusinessGroup = (event: React.ChangeEvent<HTMLSelectElement>) => {
