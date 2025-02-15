@@ -1,30 +1,26 @@
 import React from 'react';
 import styles from './select.module.css';
-import { BusinessGroup } from '@/app/interface/BusinessGroup';
 
-interface Props {
+interface Option<T> {
+    value: T;
     label: string;
-    options: { value: string; label: string }[];
-    value: string;
+}
+
+interface Props<T> {
+    label: string;
+    options: Option<T>[];
+    value: T;
     onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
     width?: string;
 }
 
-interface PropsCompany {
-    label: string;
-    options: BusinessGroup[];
-    value: string;
-    onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-    width?: string;
-}
-
-const Select: React.FC<Props> = ({ label, options, value, onChange, width }) => {
+const Select = <T,>({ label, options, value, onChange, width }: Props<T>) => {
     return (
         <div className={styles.selectContainer}>
             <label className={styles.label}>{label}</label>
-            <select className={styles.select} value={value} onChange={onChange} style={{ width }}>
+            <select className={styles.select} value={JSON.stringify(value)} onChange={onChange} style={{ width }}>
                 {options.map((option) => (
-                    <option key={option.value} value={option.value}>
+                    <option key={JSON.stringify(option.value)} value={JSON.stringify(option.value)}>
                         {option.label}
                     </option>
                 ))}
@@ -32,18 +28,5 @@ const Select: React.FC<Props> = ({ label, options, value, onChange, width }) => 
         </div>
     );
 };
-export const SelectCompany: React.FC<PropsCompany> = ({ label, options, value, onChange, width }) => {
-    return (
-        <div className={styles.selectContainer}>
-            <label className={styles.label}>{label}</label>
-            <select className={styles.select} value={value} onChange={onChange} style={{ width }}>
-                {options.map((option) => (
-                    <option key={option.name} value={option.id}>
-                        {option.name}
-                    </option>
-                ))}
-            </select>
-        </div>
-    );
-};
+
 export default Select;

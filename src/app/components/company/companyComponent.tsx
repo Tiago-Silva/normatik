@@ -20,7 +20,7 @@ const columns = [
 const CompanyComponent = () => {
     const [showForm, setShowForm] = useState(false);
     const [companyList, setCompanyList] = useState<Company[]>([]);
-    const [businessGroup, setBusinessGroup] = useState<BusinessGroup | undefined>(undefined);
+    const [businessGroup, setBusinessGroup] = useState<BusinessGroup>({} as BusinessGroup);
 
     const handleShowForm = () => {
         setShowForm(!showForm);
@@ -49,7 +49,7 @@ const CompanyComponent = () => {
                 <FormCompany onShowForm={handleShowForm} group={businessGroup} />
             ) : (
                 <>
-                    <SearchCompany onSelectBusinessGroup={setBusinessGroup}/>
+                    <SearchCompany businessGroup={businessGroup} onSelectBusinessGroup={setBusinessGroup}/>
                     <List<Company>
                         list={companyList}
                         columns={columns}
