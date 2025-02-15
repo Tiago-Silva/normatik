@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { BusinessGroup } from '@/app/interface/BusinessGroup';
 import { BusinessGroupService } from '@/app/service/BusinessGroupService';
 import Select from "@/app/components/select/select";
+import styles from './seach.module.css';
+import Button from "@/app/components/button/button";
+import {FaFileExport, FaSearch} from "react-icons/fa";
 
 const statusOptions = [
     { value: 'true', label: 'Ativo' },
@@ -38,21 +41,41 @@ const SearchCompany: React.FC<Props> = ({ businessGroup, onSelectBusinessGroup }
     }, []);
 
     return (
-        <div>
-            <Select<BusinessGroup>
-                label={'Grupo/Cliente'}
-                options={businessGroupList.map(group => ({ value: group, label: group.name }))}
-                value={businessGroup}
-                onChange={handleSelectBusinessGroup}
-                width={'300px'}
-            />
-            <Select<string>
-                label={'Status'}
-                options={statusOptions}
-                value={status}
-                onChange={handleStatusChange}
-                width={'300px'}
-            />
+        <div className={styles.container}>
+
+            <div className={styles.wrapper}>
+                <Select<BusinessGroup>
+                    label={'Grupo/Cliente'}
+                    options={businessGroupList.map(group => ({ value: group, label: group.name }))}
+                    value={businessGroup}
+                    onChange={handleSelectBusinessGroup}
+                    width={'300px'}
+                />
+                <Select<string>
+                    label={'Status'}
+                    options={statusOptions}
+                    value={status}
+                    onChange={handleStatusChange}
+                    width={'300px'}
+                />
+            </div>
+
+            <div className={styles.wrapper}>
+                <Button
+                    title={'Buscar'}
+                    icon={FaSearch}
+                    background={'#31b331'}
+                    width={'300px'}
+                    onClick={() => {}}
+                />
+
+                <Button
+                    title={'Exportar'}
+                    icon={FaFileExport}
+                    width={'300px'} onClick={function (): void {
+                    throw new Error('Function not implemented.');
+                }} />
+            </div>
         </div>
     );
 };
