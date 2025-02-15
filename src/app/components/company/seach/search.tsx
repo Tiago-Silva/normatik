@@ -4,20 +4,29 @@ import { BusinessGroupService } from '@/app/service/BusinessGroupService';
 import Select from "@/app/components/select/select";
 import styles from './seach.module.css';
 import Button from "@/app/components/button/button";
-import {FaFileExport, FaSearch} from "react-icons/fa";
+import { FaFileExport, FaSearch } from "react-icons/fa";
 
 const statusOptions = [
-    { value: 'true', label: 'Ativo' },
-    { value: 'false', label: 'Desativado' },
+    { value: true, label: 'Ativo' },
+    { value: false, label: 'Desativado' },
 ];
 
 interface Props {
     businessGroup: BusinessGroup;
+    status: boolean;
     onSelectBusinessGroup: (businessGroup: BusinessGroup) => void;
+    onSelectStatus: (status: boolean) => void;
+    onSearchBusinessGroup: (businessGroup: BusinessGroup, status: boolean) => void;
 }
 
-const SearchCompany: React.FC<Props> = ({ businessGroup, onSelectBusinessGroup }) => {
-    const [status, setStatus] = useState<string>('true');
+const SearchCompany: React.FC<Props> = (
+    {
+        status = true,
+        businessGroup,
+        onSelectBusinessGroup,
+        onSelectStatus,
+        onSearchBusinessGroup
+    }) => {
     const [businessGroupList, setBusinessGroupList] = useState<BusinessGroup[]>([]);
 
     const handleGetAllBusinessGroup = async () => {
@@ -33,7 +42,7 @@ const SearchCompany: React.FC<Props> = ({ businessGroup, onSelectBusinessGroup }
     };
 
     const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setStatus(event.target.value);
+        onSelectStatus(event.target.value === 'true');
     };
 
     useEffect(() => {
@@ -51,7 +60,7 @@ const SearchCompany: React.FC<Props> = ({ businessGroup, onSelectBusinessGroup }
                     onChange={handleSelectBusinessGroup}
                     width={'300px'}
                 />
-                <Select<string>
+                <Select<boolean>
                     label={'Status'}
                     options={statusOptions}
                     value={status}
@@ -66,7 +75,7 @@ const SearchCompany: React.FC<Props> = ({ businessGroup, onSelectBusinessGroup }
                     icon={FaSearch}
                     background={'#31b331'}
                     width={'300px'}
-                    onClick={() => {}}
+                    onClick={() => onSearchBusinessGroup(businessGroup, status)}
                 />
 
                 <Button
