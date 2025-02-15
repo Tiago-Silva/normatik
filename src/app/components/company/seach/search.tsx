@@ -1,28 +1,20 @@
-'use client';
-
-import React, {useEffect, useState} from 'react';
-import styles from './seach.module.css';
-import Select, { SelectCompany } from "@/app/components/select/select";
-import Button from "@/app/components/button/button";
-import {FaFileExport, FaSearch} from "react-icons/fa";
-import Input from "@/app/components/input/input";
+import React, { useState, useEffect } from 'react';
 import { BusinessGroup } from '@/app/interface/BusinessGroup';
 import { BusinessGroupService } from '@/app/service/BusinessGroupService';
+import Select from "@/app/components/select/select";
 
 const statusOptions = [
-    { value: 'ativo', label: 'Ativo' },
-    { value: 'desativado', label: 'Desativado' },
+    { value: 'true', label: 'Ativo' },
+    { value: 'false', label: 'Desativado' },
 ];
 
 interface Props {
+    businessGroup: BusinessGroup;
     onSelectBusinessGroup: (businessGroup: BusinessGroup) => void;
 }
 
-const SearchCompany: React.FC<Props> = ({ onSelectBusinessGroup }) => {
-    const [status, setStatus] = useState<boolean>(true);
-    const [groupName, setGroupName] = useState('');
-    const [companyName, setCompanyName] = useState('');
-
+const SearchCompany: React.FC<Props> = ({ businessGroup, onSelectBusinessGroup }) => {
+    const [status, setStatus] = useState<string>('true');
     const [businessGroupList, setBusinessGroupList] = useState<BusinessGroup[]>([]);
 
     const handleGetAllBusinessGroup = async () => {
@@ -32,16 +24,12 @@ const SearchCompany: React.FC<Props> = ({ onSelectBusinessGroup }) => {
     }
 
     const handleSelectBusinessGroup = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const selectedGroupId = Number(event.target.value);
-        const selectedGroup = businessGroupList.find(group => group.id === selectedGroupId);
-        if (selectedGroup) {
-            setGroupName(selectedGroup.name);
-            onSelectBusinessGroup(selectedGroup);
-        }
+        const selectedGroup = JSON.parse(event.target.value) as BusinessGroup;
+        onSelectBusinessGroup(selectedGroup);
     };
-    
+
     const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setStatus(event.target.value === 'true');
+        setStatus(event.target.value);
     };
 
     useEffect(() => {
@@ -49,52 +37,21 @@ const SearchCompany: React.FC<Props> = ({ onSelectBusinessGroup }) => {
     }, []);
 
     return (
-        <div className={styles.container}>
-        
-            <div className={styles.wrapper}>
-                <SelectCompany
-                    label={'Grupo/Cliente'}
-                    options={businessGroupList}
-                    value={groupName}
-                    onChange={handleSelectBusinessGroup}
-                    width={'300px'}
-                />
-                <Select
-                    label={'Status'}
-                    options={statusOptions}
-                    value={status.toString()}
-                    onChange={handleStatusChange}
-                    width={'300px'}
-                />
-                <Select
-                    label={'Status'}
-                    options={statusOptions}
-                    value={status.toString()}
-                    onChange={handleStatusChange}
-                    width={'300px'}
-                />
-            </div>
-
-            <div className={styles.wrapper}>
-                <Input label={'Nome'} width={'500px'} value={companyName} onChange={(e) => setCompanyName(e.target.value)}/>
-            </div>
-
-            <div className={styles.wrapper}>
-                <Button
-                    title={'Buscar'}
-                    icon={FaSearch}
-                    background={'#31b331'}
-                    width={'300px'} onClick={function (): void {
-                        throw new Error('Function not implemented.');
-                    } }                />
-
-                <Button
-                    title={'Exportar'}
-                    icon={FaFileExport}
-                    width={'300px'} onClick={function (): void {
-                        throw new Error('Function not implemented.');
-                    } }                />
-            </div>
+        <div>
+            <Select<BusinessGroup>
+                label={'Grupo/Cliente'}
+                options={businessGroupList.map(group => ({ value: group, label: group.name }))}
+                value={businessGroup}
+                onChange={handleSelectBusinessGroup}
+                width={'300px'}
+            />
+            <Select<string>
+                label={'Status'}
+                options={statusOptions}
+                value={status}
+                onChange={handleStatusChange}
+                width={'300px'}
+            />
         </div>
     );
 };
