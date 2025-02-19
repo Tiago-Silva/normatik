@@ -1,36 +1,46 @@
 import React from 'react';
+import { UseFormRegister, FieldError, FieldValues, Path } from 'react-hook-form';
 import styles from './input.module.css';
-import {useMask} from "@react-input/mask";
+import { useHookFormMask } from 'use-mask-input';
 
-interface Props {
+interface Props<T extends FieldValues> {
     label: string;
-    value: string;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    mask: string;
+    name: Path<T>;
+    mask: string[];
+    type?: string;
+    value?: string;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     width?: string;
     disabled?: boolean;
+    register: UseFormRegister<T>;
+    error?: FieldError | undefined;
 }
 
-const Input: React.FC<Props> = ({ label, value, onChange, width, disabled, mask }) => {
+const InputMask = <T extends FieldValues>(
+    {
+        label,
+        name,
+        mask,
+        width,
+        disabled,
+        register,
+        error
+    }: Props<T>) => {
 
-    const inputRef = useMask({
-        mask: mask,
-        replacement: { _: /\d/ },
-    });
+    const registerWithMask = useHookFormMask(register);
 
     return (
         <div className={styles.inputContainer}>
             <label className={styles.label}>{label}</label>
             <input
-                ref={inputRef}
                 className={styles.input}
                 style={{ width }}
-                value={value}
-                onChange={onChange}
                 disabled={disabled}
+                {...registerWithMask(name, mask)}
             />
+            {error && <span className={styles.error}>{error.message}</span>}
         </div>
     );
 };
 
-export default Input;
+export default InputMask;
