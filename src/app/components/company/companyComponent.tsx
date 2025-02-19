@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styles from './company-component.module.css';
 import HeaderCompany from './header';
 import SearchCompany from './seach/search';
@@ -19,7 +19,6 @@ const columns = [
 
 const CompanyComponent = () => {
     const [showForm, setShowForm] = useState(false);
-    const [companyList, setCompanyList] = useState<Company[]>([]);
     const [businessGroup, setBusinessGroup] = useState<BusinessGroup>({} as BusinessGroup);
     const [status, setStatus] = useState<boolean>(true);
     const [filteredCompanyList, setFilteredCompanyList] = useState<Company[]>([]);
@@ -32,24 +31,13 @@ const CompanyComponent = () => {
         console.log('Aquiiii: ');
     }
 
-    const handleGetAllCompany = async () => {
-        const service = new CompanyService();
-        const data = await service.getAllCompanies();
-        setCompanyList(data);
-    }
-
-    const handleSearchBusinessGroup = (data: BusinessGroup, status: boolean) => {
-        setBusinessGroup(data);
+    const handleGetCompaniesByBusinessGroupAndStatus = async (group: BusinessGroup, status: boolean) => {
+        setBusinessGroup(group);
         setStatus(status);
-        const filteredCompanies = companyList.filter(company =>
-            company.businessGroupId === data.id && company.status === status
-        );
-        setFilteredCompanyList(filteredCompanies);
-    };
-
-    useEffect(() => {
-        handleGetAllCompany().then();
-    }, []);
+        const service = new CompanyService();
+        const data = await service.getCompaniesByBusinessGroupAndStatus(group.id, status);
+        setFilteredCompanyList(data);
+    }
 
     return (
         <div className={styles.container}>
@@ -63,7 +51,7 @@ const CompanyComponent = () => {
                         status={status}
                         onSelectBusinessGroup={setBusinessGroup}
                         onSelectStatus={setStatus}
-                        onSearchBusinessGroup={handleSearchBusinessGroup}
+                        onSearchBusinessGroup={handleGetCompaniesByBusinessGroupAndStatus}
                     />
                     <List<Company>
                         list={filteredCompanyList}
