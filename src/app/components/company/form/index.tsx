@@ -36,9 +36,10 @@ export type companyData = z.infer<typeof CompanyDTO>;
 interface Props {
     group?: BusinessGroup;
     onShowForm: () => void;
+    onUpdateCompanyListWhenSaving: () => void;
 }
 
-const FormCompany: React.FC<Props> = ({ group, onShowForm }) => {
+const FormCompany: React.FC<Props> = ({ group, onShowForm, onUpdateCompanyListWhenSaving }) => {
 
     const handleSubmitHere = async (data: companyData) => {
         const newCompany: NewCompany = {
@@ -58,7 +59,7 @@ const FormCompany: React.FC<Props> = ({ group, onShowForm }) => {
         const service = new CompanyService();
         try {
             await service.createCompany(newCompany);
-            onShowForm();
+            onUpdateCompanyListWhenSaving();
         } catch (error) {
             console.error('Error creating company:', error);
         }
