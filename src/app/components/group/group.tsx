@@ -21,6 +21,7 @@ const GroupComponent = () => {
     const [selectedBusinessGroup, setSelectedBusinessGroup] = useState<BusinessGroup | undefined>(undefined);
     const [searchParams, setSearchParams] = useState<{ name: string, status: boolean }>({ name: '', status: true });
     const [isClient, setIsClient] = useState(false);
+    const [status, setStatus] = useState<boolean>(true);
 
     useEffect(() => {
         setIsClient(true);
@@ -75,7 +76,7 @@ const GroupComponent = () => {
                 />
             ) : (
                 <>
-                    <Search onSearchBusinessGroup={handleSearchBusinessGroup} />
+                    <Search onSearchBusinessGroup={handleSearchBusinessGroup} status={status} onSelectStatus={setStatus} />
                     <List<BusinessGroup>
                         list={filteredBusinessList}
                         columns={columns}
