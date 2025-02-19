@@ -33,7 +33,7 @@ const SearchCompany: React.FC<Props> = (
         const businessService = new BusinessGroupService();
         const data = await businessService.getAllBusinessGroups();
         setBusinessGroupList(data);
-        onSelectBusinessGroup(data[0]);
+        onSearchBusinessGroup(data[0], true);
     }
 
     const handleSelectBusinessGroup = (event: React.ChangeEvent<HTMLSelectElement>) => {
