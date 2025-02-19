@@ -2,14 +2,19 @@
 
 import React from 'react';
 import styles from './index.module.css';
-import Input from "@/app/components/input/input";
 import { FaFileAlt, FaSave } from "react-icons/fa";
 import Button from "@/app/components/button/button";
 import ToggleSwitch from "@/app/components/toggleSwitch/toggleSwitch";
 import { BusinessGroup } from "@/app/interface/BusinessGroup";
-import Select from "@/app/components/select/select";
-import { useCompanyForm } from '@/app/hooks/useCompanyForm';
 import InputMask from "@/app/components/input/inputMask";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import {CompanyDTO, NewCompany} from "@/app/interface/Company";
+import {zodResolver} from "@hookform/resolvers/zod";
+import {CompanyService} from "@/app/service/CompanyService";
+import SelectZod from "@/app/components/select/SelectZod";
+import InputZod from "@/app/components/input/InputZod";
+import Input from "@/app/components/input/input";
 
 const registrationTypeOptions = [
     { value: 'cnpj', label: 'CNPJ' },
@@ -26,65 +31,104 @@ const esocialGroupOptions = [
     // Add more groups as needed
 ];
 
+export type companyData = z.infer<typeof CompanyDTO>;
+
 interface Props {
     group?: BusinessGroup;
     onShowForm: () => void;
 }
 
 const FormCompany: React.FC<Props> = ({ group, onShowForm }) => {
-    const {
-        formState,
-        handleInputChange,
-        handleToggleChange,
-        handleSelectChange,
-        handleSubmit,
-    } = useCompanyForm(group);
 
-    const handleSubmitHere = async (e: React.FormEvent) => {
-        await handleSubmit(e);
-        onShowForm();
+    const handleSubmitHere = async (data: companyData) => {
+        const newCompany: NewCompany = {
+            name: data.name,
+            cnpj: data.cnpj,
+            doctor: data.doctor,
+            status: data.status || false,
+            registrationType: data.registrationType,
+            fantasyName: data.fantasyName,
+            cnae: data.cnae,
+            cep: data.cep,
+            rule: data.rule || false,
+            esocialGroup: data.esocialGroup,
+            businessGroup: data.businessGroup,
+        };
+
+        const service = new CompanyService();
+        try {
+            await service.createCompany(newCompany);
+            onShowForm();
+        } catch (error) {
+            console.error('Error creating company:', error);
+        }
     };
+
+    const { register, setValue, handleSubmit, formState: { errors, isValid }} = useForm<companyData>({
+        resolver: zodResolver(CompanyDTO),
+        mode: 'onChange',
+        defaultValues: {
+            businessGroup: group
+        }
+    })
 
     return (
         <div className={styles.container}>
             <h2 className={styles.title}><FaFileAlt /> Dados da Empresa / Empregador <span>*</span>:</h2>
-            <form onSubmit={handleSubmitHere}>
+            <form onSubmit={handleSubmit(handleSubmitHere)}>
+
                 <Input
                     label={'Grupo/Cliente:'}
-                    value={formState.businessGroup.name}
-                    onChange={handleInputChange('businessGroup')} disabled={true}/>
-                <Select
+                    disabled={true}
+                    value={group?.name || ''}
+                    onChange={() => {}}
+                />
+
+                <SelectZod
                     label={'Tipo de inscrição no eSocial:'}
                     options={registrationTypeOptions}
-                    value={formState.registrationType}
-                    onChange={handleSelectChange('registrationType')}
                     width={'300px'}
+                    register={register('registrationType')}
+                    error={errors.registrationType}
                 />
-                <InputMask label={'CNPJ:'} value={formState.cnpj} onChange={handleInputChange('cnpj')} mask={'__.___.___/____-__'} />
-                <Input label={'Razão Social:'} value={formState.name} onChange={handleInputChange('name')}/>
-                <Input label={'Nome Fantasia:'} value={formState.fantasyName} onChange={handleInputChange('fantasyName')}/>
-                <InputMask label={'CNAE:'} value={formState.cnae} onChange={handleInputChange('cnae')} mask={'__.__-_'} />
-                <InputMask label={'CEP:'} value={formState.cep} onChange={handleInputChange('cep')} mask={'_____-___'} />
-                <Input label={'Médico Responsável:'} value={formState.doctor} onChange={handleInputChange('doctor')}/>
-                <ToggleSwitch label={'Aplicar regra básica do PCMSO - (NR7):'} isChecked={formState.rule} onClick={handleToggleChange('rule')}/>
 
-                <Select
+                <InputMask label={'CNPJ:'} mask={['99.999.999/9999-99']} register={register} name={'cnpj'} error={errors?.cnpj}/>
+                <InputZod label={'Razão Social:'} register={register('name')} error={errors?.name} />
+                <InputZod label={'Nome Fantasia:'} register={register('fantasyName')} error={errors?.fantasyName} />
+                <InputMask label={'CNAE:'} mask={['99.99-9']} register={register} name={'cnae'} error={errors?.cnae}/>
+                <InputMask label={'CEP:'} mask={['99999-999']} register={register} name={'cep'} error={errors?.cep}/>
+                <InputZod label={'Médico Responsável:'} register={register('doctor')} error={errors?.doctor} />
+                <ToggleSwitch
+                    label={'Aplicar regra básica do PCMSO - (NR7):'}
+                    name={'rule'}
+                    isChecked={false}
+                    setValue={setValue}
+                    register={register('rule')}
+                />
+
+                <SelectZod
                     label={'Grupo do eSocial'}
                     options={esocialGroupOptions}
-                    value={formState.esocialGroup}
-                    onChange={handleSelectChange('esocialGroup')}
                     width={'300px'}
+                    register={register('esocialGroup')}
+                    error={errors.esocialGroup}
                 />
 
-                <ToggleSwitch label={'Status da empresa:'} isChecked={formState.status} onClick={handleToggleChange('status')}/>
-
+                <ToggleSwitch
+                    label={'Status da empresa:'}
+                    name={'status'}
+                    isChecked={true}
+                    setValue={setValue}
+                    register={register('status')}
+                />
                 <div className={styles.wrapperButton}>
                     <Button
                         title={'Salvar'}
                         icon={FaSave}
-                        onClick={() => handleSubmit}
                         width={'250px'}
                         background={'#295A9C'}
+                        disabled={!isValid}
+                        type={'submit'}
                     />
 
                     <Button

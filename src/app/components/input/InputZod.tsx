@@ -1,46 +1,44 @@
 import React from 'react';
-import { UseFormRegister, FieldError, FieldValues, Path } from 'react-hook-form';
+import { UseFormRegister, FieldError, FieldValues } from 'react-hook-form';
 import styles from './input.module.css';
-import { useHookFormMask } from 'use-mask-input';
 
 interface Props<T extends FieldValues> {
     label: string;
-    name: Path<T>;
-    mask: string[];
     type?: string;
     value?: string;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     width?: string;
     disabled?: boolean;
-    register: UseFormRegister<T>;
+    register?: ReturnType<UseFormRegister<T>>;
     error?: FieldError | undefined;
 }
 
-const InputMask = <T extends FieldValues>(
+const InputZod = <T extends FieldValues>(
     {
         label,
-        name,
-        mask,
+        type = 'text',
+        value,
+        onChange,
         width,
         disabled,
         register,
         error
     }: Props<T>) => {
-
-    const registerWithMask = useHookFormMask(register);
-
     return (
         <div className={styles.inputContainer}>
             <label className={styles.label}>{label}</label>
             <input
                 className={styles.input}
                 style={{ width }}
+                type={type}
+                value={value}
+                onChange={onChange}
                 disabled={disabled}
-                {...registerWithMask(name, mask)}
+                {...register}
             />
             {error && <span className={styles.error}>{error.message}</span>}
         </div>
     );
 };
 
-export default InputMask;
+export default InputZod;

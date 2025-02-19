@@ -7,9 +7,10 @@ interface Props {
     icon: IconType;
     background?: string;
     width?: string;
-    onClick: () => void;
+    onClick?: () => void;
     disabled?: boolean;
     color?: string;
+    type?: 'button' | 'submit' | 'reset';
 }
 
 const Button: React.FC<Props> = (
@@ -21,6 +22,7 @@ const Button: React.FC<Props> = (
         onClick,
         disabled = false,
         color = '#FFFFFF',
+        type = 'button',
         ...rest
     }) => {
     return (
@@ -29,6 +31,7 @@ const Button: React.FC<Props> = (
             style={{ background, width, color }}
             onClick={onClick}
             disabled={disabled}
+            type={type}
             {...rest}
         >
             <Icon className={styles.icon} />
