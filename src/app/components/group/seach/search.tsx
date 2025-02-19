@@ -8,30 +8,32 @@ import Button from "@/app/components/button/button";
 import { FaFileExport, FaSearch } from "react-icons/fa";
 
 const statusOptions = [
-    { value: 'true', label: 'Ativo' },
-    { value: 'false', label: 'Desativado' },
+    { value: true, label: 'Ativo' },
+    { value: false, label: 'Desativado' },
 ];
 
 interface Props {
+    status: boolean;
     onSearchBusinessGroup: (name: string, status: boolean) => void;
+    onSelectStatus: (status: boolean) => void;
 }
 
-const Search: React.FC<Props> = ({ onSearchBusinessGroup }) => {
-    const [status, setStatus] = useState<boolean>(true);
+const Search: React.FC<Props> = ({ status = true, onSearchBusinessGroup, onSelectStatus }) => {
     const [name, setName] = useState('');
 
     const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setStatus(event.target.value === 'true');
+        onSelectStatus(event.target.value === 'true');
     };
 
     return (
         <div className={styles.container}>
             <div className={styles.wrapper}>
                 <Input label={'Nome'} width={'500px'} value={name} onChange={(e) => setName(e.target.value)}/>
-                <Select
+
+                <Select<boolean>
                     label={'Status'}
                     options={statusOptions}
-                    value={status.toString()}
+                    value={status}
                     onChange={handleStatusChange}
                     width={'300px'}
                 />
