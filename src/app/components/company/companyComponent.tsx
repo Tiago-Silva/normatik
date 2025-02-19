@@ -22,13 +22,15 @@ const CompanyComponent = () => {
     const [businessGroup, setBusinessGroup] = useState<BusinessGroup>({} as BusinessGroup);
     const [status, setStatus] = useState<boolean>(true);
     const [filteredCompanyList, setFilteredCompanyList] = useState<Company[]>([]);
+    const [company, setCompany] = useState<Company>({} as Company);
 
     const handleShowForm = () => {
         setShowForm(!showForm);
     };
 
-    const handleEditCompany = () => {
-        console.log('Aquiiii: ');
+    const handleEditCompany = (data: Company) => {
+        setCompany(data);
+        setShowForm(!showForm);
     }
 
     const handleGetCompaniesByBusinessGroupAndStatus = async (group: BusinessGroup, status: boolean) => {
@@ -48,7 +50,12 @@ const CompanyComponent = () => {
         <div className={styles.container}>
             <HeaderCompany isShow={showForm} onClickButton={handleShowForm} />
             {showForm ? (
-                <FormCompany onShowForm={handleShowForm} group={businessGroup} onUpdateCompanyListWhenSaving={handleUpdateCompanyListWhenSaving} />
+                <FormCompany
+                    onShowForm={handleShowForm}
+                    company={company}
+                    group={businessGroup}
+                    onUpdateCompanyListWhenSaving={handleUpdateCompanyListWhenSaving}
+                />
             ) : (
                 <>
                     <SearchCompany
