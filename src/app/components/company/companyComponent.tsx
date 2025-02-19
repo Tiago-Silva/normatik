@@ -39,11 +39,16 @@ const CompanyComponent = () => {
         setFilteredCompanyList(data);
     }
 
+    const handleUpdateCompanyListWhenSaving = () => {
+        handleGetCompaniesByBusinessGroupAndStatus(businessGroup, true).then();
+        handleShowForm();
+    }
+
     return (
         <div className={styles.container}>
             <HeaderCompany isShow={showForm} onClickButton={handleShowForm} />
             {showForm ? (
-                <FormCompany onShowForm={handleShowForm} group={businessGroup} />
+                <FormCompany onShowForm={handleShowForm} group={businessGroup} onUpdateCompanyListWhenSaving={handleUpdateCompanyListWhenSaving} />
             ) : (
                 <>
                     <SearchCompany
