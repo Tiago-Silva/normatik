@@ -1,6 +1,4 @@
-'use client';
-
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './index.module.css';
 import { FaFileAlt, FaSave } from "react-icons/fa";
 import Button from "@/app/components/button/button";
@@ -9,12 +7,12 @@ import { BusinessGroup } from "@/app/interface/BusinessGroup";
 import InputMask from "@/app/components/input/inputMask";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
-import {CompanyDTO, NewCompany} from "@/app/interface/Company";
-import {zodResolver} from "@hookform/resolvers/zod";
-import {CompanyService} from "@/app/service/CompanyService";
+import { CompanyDTO, NewCompany, Company } from "@/app/interface/Company";
+import { zodResolver } from "@hookform/resolvers/zod";
 import SelectZod from "@/app/components/select/SelectZod";
 import InputZod from "@/app/components/input/InputZod";
 import Input from "@/app/components/input/input";
+import { CompanyService } from "@/app/service/CompanyService";
 
 const registrationTypeOptions = [
     { value: 'cnpj', label: 'CNPJ' },
@@ -35,13 +33,46 @@ export type companyData = z.infer<typeof CompanyDTO>;
 
 interface Props {
     group?: BusinessGroup;
+    company?: Company;
     onShowForm: () => void;
     onUpdateCompanyListWhenSaving: () => void;
 }
 
-const FormCompany: React.FC<Props> = ({ group, onShowForm, onUpdateCompanyListWhenSaving }) => {
+const FormCompany: React.FC<Props> = (
+    {
+        group,
+        company,
+        onShowForm,
+        onUpdateCompanyListWhenSaving
+    }) => {
 
-    const handleSubmitHere = async (data: companyData) => {
+    const { register, setValue, handleSubmit, formState: { errors, isValid } } = useForm<companyData>({
+        resolver: zodResolver(CompanyDTO),
+        mode: 'onChange',
+        defaultValues: {
+            businessGroup: group
+        }
+    });
+
+    useEffect(() => {
+        if (company) {
+            setValue('name', company.name);
+            setValue('cnpj', company.cnpj);
+            setValue('doctor', company.doctor);
+            setValue('status', company.status);
+            setValue('registrationType', company.registrationType);
+            setValue('fantasyName', company.fantasyName);
+            setValue('cnae', company.cnae);
+            setValue('cep', company.cep);
+            setValue('rule', company.rule);
+            setValue('esocialGroup', company.esocialGroup);
+            if (company.businessGroup) {
+                setValue('businessGroup', company.businessGroup);
+            }
+        }
+    }, [company, setValue]);
+
+    const handleCreateCompany = async (data: companyData) => {
         const newCompany: NewCompany = {
             name: data.name,
             cnpj: data.cnpj,
@@ -65,18 +96,28 @@ const FormCompany: React.FC<Props> = ({ group, onShowForm, onUpdateCompanyListWh
         }
     };
 
-    const { register, setValue, handleSubmit, formState: { errors, isValid }} = useForm<companyData>({
-        resolver: zodResolver(CompanyDTO),
-        mode: 'onChange',
-        defaultValues: {
-            businessGroup: group
+    const handleEditCompany = async (data: companyData) => {
+        const updatedCompany: Company = {
+            ...company,
+            ...data,
+            id: company?.id ?? 1,
+            status: data.status ?? true,
+            rule: data.rule ?? false,
+        };
+
+        const service = new CompanyService();
+        try {
+            await service.updateCompany(updatedCompany);
+            onUpdateCompanyListWhenSaving();
+        } catch (error) {
+            console.error('Error updating company:', error);
         }
-    })
+    };
 
     return (
         <div className={styles.container}>
             <h2 className={styles.title}><FaFileAlt /> Dados da Empresa / Empregador <span>*</span>:</h2>
-            <form onSubmit={handleSubmit(handleSubmitHere)}>
+            <form onSubmit={handleSubmit(company ? handleEditCompany : handleCreateCompany)}>
 
                 <Input
                     label={'Grupo/Cliente:'}
@@ -124,7 +165,7 @@ const FormCompany: React.FC<Props> = ({ group, onShowForm, onUpdateCompanyListWh
                 />
                 <div className={styles.wrapperButton}>
                     <Button
-                        title={'Salvar'}
+                        title={company ? 'Alterar' : 'Salvar'}
                         icon={FaSave}
                         width={'250px'}
                         background={'#295A9C'}
