@@ -39,10 +39,17 @@ const FormCompany: React.FC<Props> = ({ group, onShowForm }) => {
         handleSelectChange,
         handleSubmit,
     } = useCompanyForm(group);
-
+   
+    // const elements = document.querySelectorAll('Input')
+    // for (let i = 0; i < elements.length; i++) {
+    //     console.log(elements[i].value);
+    // }
+    // console.log(elements.length)
     const handleSubmitHere = async (e: React.FormEvent) => {
+       
         await handleSubmit(e);
         onShowForm();
+        
     };
 
     return (
@@ -61,7 +68,7 @@ const FormCompany: React.FC<Props> = ({ group, onShowForm }) => {
                     width={'300px'}
                 />
                 <InputMask label={'CNPJ:'} value={formState.cnpj} onChange={handleInputChange('cnpj')} mask={'__.___.___/____-__'} />
-                <Input label={'Razão Social:'} value={formState.name} onChange={handleInputChange('name')}/>
+                <Input label={'Razão Social:'} msgError='Razçao Social incompleto' value={formState.name} onChange={handleInputChange('name')}/>
                 <Input label={'Nome Fantasia:'} value={formState.fantasyName} onChange={handleInputChange('fantasyName')}/>
                 <InputMask label={'CNAE:'} value={formState.cnae} onChange={handleInputChange('cnae')} mask={'__.__-_'} />
                 <InputMask label={'CEP:'} value={formState.cep} onChange={handleInputChange('cep')} mask={'_____-___'} />
@@ -79,13 +86,29 @@ const FormCompany: React.FC<Props> = ({ group, onShowForm }) => {
                 <ToggleSwitch label={'Status da empresa:'} isChecked={formState.status} onClick={handleToggleChange('status')}/>
 
                 <div className={styles.wrapperButton}>
+                {formState.name.length > 0 && (
                     <Button
-                        title={'Salvar'}
-                        icon={FaSave}
-                        onClick={() => handleSubmit}
-                        width={'250px'}
-                        background={'#295A9C'}
-                    />
+                    title={'Salvar'}
+                    icon={FaSave}
+                    onClick={() => handleSubmit}
+                    width={'250px'}
+                    background={'#295A9C'}
+                    disabled={false}
+
+
+                />
+                )}
+                {formState.name.length < 1 && (
+                    <Button
+                    title={'Salvar'}
+                    icon={FaSave}
+                    onClick={() => handleSubmit}
+                    width={'250px'}
+                    background="#4b5868"
+                    disabled={true}
+                />
+                )}
+                    
 
                     <Button
                         title={'Cancelar/Voltar'}

@@ -44,26 +44,42 @@ const FormGroup: React.FC<Props> = ({ onClickButton, onShowForm, businessGroup }
             <h2 className={styles.title}><FaFileAlt /> Dados do grupo/client <span>*</span>:</h2>
             <form>
                 <Input label={'Nome/Referência'} value={name} onChange={handleNameChange} />
+                {/* {name.length > 0 && name.length < 2 && (
+                    <p style={{color: 'red'}}>Nome completo</p>
+                )} */}
                 <ToggleSwitch label={'Status:'} isChecked={status} onClick={handleStatusChange} />
 
                 <div className={styles.wrapperButton}>
+                {name.length > 0 && (
                     <Button
-                        title={businessGroup ? 'Alterar' : 'Salvar Grupo/Cliente'}
+                        title="Salvar"
                         icon={FaSave}
                         onClick={handleSave}
-                        width={'250px'}
-                        background={'#295A9C'}
-                        disabled={!isFormValid || isSaving}
+                        width="250px"
+                        background="#295A9C"
+                        disabled={false}
                     />
-
+                )}
+                {name.length < 1 && (
                     <Button
-                        title={'Cancelar/Voltar'}
-                        icon={FaTimes}
-                        onClick={onClickButton}
-                        width={'200px'}
-                        background={'#ddd'}
-                        color={'gray'}
+                        title="Salvar"
+                        icon={FaSave}
+                        onClick={handleSave}
+                        width="250px"
+                        background="#4a6f9e"
+                        disabled={true}
                     />
+                )}
+                
+
+                <Button
+                    title={'Cancelar/Voltar'}
+                    icon={FaTimes}
+                    onClick={onClickButton}
+                    width={'200px'}
+                    background={'#ddd'}
+                    color={'gray'}
+                />
                 </div>
             </form>
         </div>

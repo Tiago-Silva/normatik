@@ -3,6 +3,7 @@ import styles from './input.module.css';
 
 interface Props {
     label: string;
+    msgError?: string;
     value: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     width?: string;
@@ -15,6 +16,7 @@ const Input: React.FC<Props> = (
         value,
         onChange,
         width,
+        msgError,
         disabled
     }) => {
     return (
@@ -27,6 +29,9 @@ const Input: React.FC<Props> = (
                 onChange={onChange}
                 disabled={disabled}
             />
+               {value?.length < 2 && (
+                    <p style={{color: 'red'}}>{msgError}</p>
+                )}
         </div>
     );
 };
