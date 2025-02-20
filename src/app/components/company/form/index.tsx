@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import styles from './index.module.css';
 import { FaFileAlt, FaSave } from "react-icons/fa";
 import Button from "@/app/components/button/button";
-import ToggleSwitch from "@/app/components/toggleSwitch/toggleSwitch";
+import ToggleSwitchZod from "@/app/components/toggleSwitch/toggleSwitchZod";
 import { BusinessGroup } from "@/app/interface/BusinessGroup";
 import InputMask from "@/app/components/input/inputMask";
 import { z } from "zod";
@@ -140,7 +140,7 @@ const FormCompany: React.FC<Props> = (
                 <InputMask label={'CNAE:'} mask={['99.99-9']} register={register} name={'cnae'} error={errors?.cnae}/>
                 <InputMask label={'CEP:'} mask={['99999-999']} register={register} name={'cep'} error={errors?.cep}/>
                 <InputZod label={'Médico Responsável:'} register={register('doctor')} error={errors?.doctor} />
-                <ToggleSwitch
+                <ToggleSwitchZod
                     label={'Aplicar regra básica do PCMSO - (NR7):'}
                     name={'rule'}
                     isChecked={false}
@@ -156,7 +156,7 @@ const FormCompany: React.FC<Props> = (
                     error={errors.esocialGroup}
                 />
 
-                <ToggleSwitch
+                <ToggleSwitchZod
                     label={'Status da empresa:'}
                     name={'status'}
                     isChecked={true}

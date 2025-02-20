@@ -1,38 +1,21 @@
-import React, { useState } from 'react';
-import styles from './toggleSwitch.module.css';
-import {FieldValues, Path, PathValue, UseFormRegister, UseFormSetValue} from 'react-hook-form';
 
-interface ToggleSwitchProps<T extends FieldValues> {
+import React from 'react';
+import styles from './toggleSwitch.module.css';
+
+interface ToggleSwitchProps {
     label: string;
-    name: Path<T>;
     isChecked: boolean;
-    setValue: UseFormSetValue<T>;
-    register?: ReturnType<UseFormRegister<T>>;
+    onClick: () => void;
 }
 
-const ToggleSwitch = <T extends FieldValues>(
-    {
-        label,
-        name,
-        isChecked,
-        setValue,
-        register
-    }: ToggleSwitchProps<T>) => {
-    const [checked, setChecked] = useState(isChecked);
-
-    const handleClick = () => {
-        const newChecked = !checked;
-        setChecked(newChecked);
-        setValue(name, newChecked as PathValue<T, Path<T>>);
-    };
+const ToggleSwitch: React.FC<ToggleSwitchProps> = ({ label, isChecked, onClick }) => {
 
     return (
         <div className={styles.container}>
             <label className={styles.label}>{label}</label>
-            <div className={`${styles.switch} ${checked ? styles.checked : ''}`} onClick={handleClick}>
-                <div className={`${styles.slider} ${checked ? styles.checked : ''}`}></div>
+            <div className={`${styles.switch} ${isChecked ? styles.checked : ''}`} onClick={onClick}>
+                <div className={`${styles.slider} ${isChecked ? styles.checked : ''}`}></div>
             </div>
-            <input type="checkbox" checked={checked} {...register} style={{ display: 'none' }} />
         </div>
     );
 };
