@@ -3,10 +3,10 @@ import styles from './index.module.css';
 import Input from "@/app/components/input/input";
 import { FaFileAlt, FaSave, FaTimes } from "react-icons/fa";
 import Button from "@/app/components/button/button";
-import ToggleSwitch from "@/app/components/toggleSwitch/toggleSwitch";
 import { BusinessGroupService } from '@/app/service/BusinessGroupService';
 import { BusinessGroup } from "@/app/interface/BusinessGroup";
 import {useBusinessGroupForm} from "@/app/hooks/useBusinessGroupForm";
+import ToggleSwitch from "@/app/components/toggleSwitch/toggleSwitch";
 
 interface Props {
     onClickButton: () => void;
