@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import Select from "@/app/components/select/select";
-import styles from './seach.module.css';
+import styles from './search.module.css';
 import Button from "@/app/components/button/button";
 import { FaSearch } from "react-icons/fa";
 import Input from "@/app/components/input/input";
