@@ -1,0 +1,48 @@
+
+
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 10px;
+    background-color: var(--background);
+    border-radius: 10px;
+}
+
+.left {
+    display: flex;
+    flex-direction: column;
+}
+
+.right {
+    display: flex;
+}
+
+.wrapperTitle {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    justify-content: start;
+    gap: 10px;
+}
+
+.wrapperTitle svg {
+    vertical-align: middle;
+}
+
+.title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--gray);
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.subTitle {
+    color: var(--gray03);
+    margin-bottom: 0;
+    text-align: center;
+}
