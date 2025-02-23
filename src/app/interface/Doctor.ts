@@ -6,6 +6,7 @@ export interface Doctor {
     description?: string;
     cpf: string;
     CRM: string;
+    status: boolean;
     createdAt: Date;
     updatedAt: Date;
 }
@@ -15,5 +16,6 @@ export interface NewDoctor {
     description?: string;
     cpf: string;
     CRM: string;
+    status: boolean;
     createdAt: Date;
 }
