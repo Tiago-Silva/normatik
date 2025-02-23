@@ -52,6 +52,7 @@ model Doctor {
   description String?
   cpf         String
   CRM         String
+  status      Boolean
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
