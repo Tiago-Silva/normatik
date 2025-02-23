@@ -13,12 +13,14 @@ const statusOptions = [
 interface Props {
     status: boolean;
     onSelectStatus: (status: boolean) => void;
+    onSearchDoctors: (name: string, status: boolean) => void;
 }
 
 const SearchDoctor: React.FC<Props> = (
     {
         status = true,
         onSelectStatus,
+        onSearchDoctors
     }) => {
     const [name, setName] = useState('');
 
@@ -51,7 +53,7 @@ const SearchDoctor: React.FC<Props> = (
                     icon={FaSearch}
                     background={'#31b331'}
                     width={'300px'}
-                    onClick={() => {}}
+                    onClick={() => onSearchDoctors(name, status)}
                 />
             </div>
         </div>
