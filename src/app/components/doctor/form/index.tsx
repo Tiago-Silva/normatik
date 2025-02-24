@@ -15,9 +15,14 @@ export type doctorData = z.infer<typeof DoctorDTO>;
 
 interface Props {
     onShowForm: () => void;
+    onUpdateCompanyListWhenSaving: () => void;
 }
 
-const FormDoctor: React.FC<Props> = ({ onShowForm }) => {
+const FormDoctor: React.FC<Props> = (
+    {
+        onShowForm,
+        onUpdateCompanyListWhenSaving
+    }) => {
 
     const { register, setValue, handleSubmit, formState: { errors, isValid } } = useForm<doctorData>({
         resolver: zodResolver(DoctorDTO),
@@ -37,6 +42,7 @@ const FormDoctor: React.FC<Props> = ({ onShowForm }) => {
         const service = new DoctorService();
         try {
             await service.createDoctor(newDoctor);
+            onUpdateCompanyListWhenSaving();
         } catch (error) {
             console.error('Error creating doctor:', error);
         }
