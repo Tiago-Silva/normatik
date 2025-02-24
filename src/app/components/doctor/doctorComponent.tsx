@@ -33,11 +33,19 @@ const DoctorComponent = () => {
         setFilteredDoctorList(data);
     }
 
+    const handleUpdateDoctorListWhenSaving = () => {
+        handleGetDoctorsByNameAndStatus('', true).then();
+        handleShowForm();
+    }
+
     return (
         <div className={styles.container}>
             <HeaderDoctor isShow={showForm} onClickButton={handleShowForm} />
             {showForm ? (
-                <FormDoctor onShowForm={handleShowForm}/>
+                <FormDoctor
+                    onShowForm={handleShowForm}
+                    onUpdateCompanyListWhenSaving={handleUpdateDoctorListWhenSaving}
+                />
             ): (
                 <>
                     <SearchDoctor
