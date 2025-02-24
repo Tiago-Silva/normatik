@@ -7,6 +7,7 @@ import HeaderDoctor from "./header";
 import {Doctor} from "@/app/interface/Doctor";
 import {DoctorService} from "@/app/service/DoctorService";
 import List from "@/app/components/list/list";
+import FormDoctor from "@/app/components/doctor/form";
 
 const columns = [
     { header: 'Profissional', accessor: (item: Doctor) => item.name },
@@ -35,18 +36,23 @@ const DoctorComponent = () => {
     return (
         <div className={styles.container}>
             <HeaderDoctor isShow={showForm} onClickButton={handleShowForm} />
+            {showForm ? (
+                <FormDoctor onShowForm={handleShowForm}/>
+            ): (
+                <>
+                    <SearchDoctor
+                        status={status}
+                        onSelectStatus={setStatus}
+                        onSearchDoctors={handleGetDoctorsByNameAndStatus}
+                    />
 
-            <SearchDoctor
-                status={status}
-                onSelectStatus={setStatus}
-                onSearchDoctors={handleGetDoctorsByNameAndStatus}
-            />
-
-            <List<Doctor>
-                list={filteredDoctorList}
-                columns={columns}
-                onEditItem={() => {}}
-            />
+                    <List<Doctor>
+                        list={filteredDoctorList}
+                        columns={columns}
+                        onEditItem={() => {}}
+                    />
+                </>
+            )}
         </div>
     );
 };
