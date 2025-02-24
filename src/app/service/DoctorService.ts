@@ -42,4 +42,9 @@ export class DoctorService {
     async deleteDoctor(id: string) {
         return this.request(`/api/doctor/${id}`, { method: 'DELETE' });
     }
+
+    async searchDoctorsByNameAndStatus(name: string, status: boolean): Promise<Doctor[]> {
+        const params = new URLSearchParams({ name, status: status.toString() });
+        return this.request(`/api/doctor/search?${params.toString()}`, { method: 'GET' });
+    }
 }
