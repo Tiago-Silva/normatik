@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './doctor-component.module.css';
 import SearchDoctor from "./seach/search";
 import HeaderDoctor from "./header";
@@ -21,6 +21,7 @@ const DoctorComponent = () => {
     const [showForm, setShowForm] = useState(false);
     const [status, setStatus] = useState<boolean>(true);
     const [filteredDoctorList, setFilteredDoctorList] = useState<Doctor[]>([]);
+    const [doctor, setDoctor] = useState<Doctor>({} as Doctor);
 
     const handleShowForm = () => {
         setShowForm(!showForm);
@@ -38,6 +39,15 @@ const DoctorComponent = () => {
         handleShowForm();
     }
 
+    const handleShowFormEditDoctor = (data: Doctor) => {
+        setDoctor(data);
+        setShowForm(!showForm);
+    }
+
+    useEffect(() => {
+        handleGetDoctorsByNameAndStatus('', true).then();
+    }, []);
+
     return (
         <div className={styles.container}>
             <HeaderDoctor isShow={showForm} onClickButton={handleShowForm} />
@@ -45,6 +55,7 @@ const DoctorComponent = () => {
                 <FormDoctor
                     onShowForm={handleShowForm}
                     onUpdateCompanyListWhenSaving={handleUpdateDoctorListWhenSaving}
+                    doctor={doctor}
                 />
             ): (
                 <>
@@ -57,7 +68,7 @@ const DoctorComponent = () => {
                     <List<Doctor>
                         list={filteredDoctorList}
                         columns={columns}
-                        onEditItem={() => {}}
+                        onEditItem={handleShowFormEditDoctor}
                     />
                 </>
             )}
