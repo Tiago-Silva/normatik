@@ -23,6 +23,7 @@ const CompanyComponent = () => {
     const [status, setStatus] = useState<boolean>(true);
     const [filteredCompanyList, setFilteredCompanyList] = useState<Company[]>([]);
     const [company, setCompany] = useState<Company>({} as Company);
+    const [companyName, setCompanyName] = useState<string>('');
 
     const handleShowForm = () => {
         setShowForm(!showForm);
@@ -33,16 +34,16 @@ const CompanyComponent = () => {
         setShowForm(!showForm);
     }
 
-    const handleGetCompaniesByBusinessGroupAndStatus = async (group: BusinessGroup, status: boolean) => {
+    const handleGetCompaniesByBusinessGroupAndStatus = async (group: BusinessGroup, status: boolean, companyName: string) => {
         setBusinessGroup(group);
         setStatus(status);
         const service = new CompanyService();
-        const data = await service.getCompaniesByBusinessGroupAndStatus(group.id, status);
+        const data = await service.getCompaniesByBusinessGroupAndStatus(group.id, status, companyName);
         setFilteredCompanyList(data);
     }
 
     const handleUpdateCompanyListWhenSaving = () => {
-        handleGetCompaniesByBusinessGroupAndStatus(businessGroup, true).then();
+        handleGetCompaniesByBusinessGroupAndStatus(businessGroup, true, '').then();
         handleShowForm();
     }
 
@@ -64,6 +65,8 @@ const CompanyComponent = () => {
                         onSelectBusinessGroup={setBusinessGroup}
                         onSelectStatus={setStatus}
                         onSearchBusinessGroup={handleGetCompaniesByBusinessGroupAndStatus}
+                        companyName={companyName}
+                        onSelectCompanyName={setCompanyName}
                     />
                     <List<Company>
                         list={filteredCompanyList}

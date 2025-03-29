@@ -7,6 +7,7 @@ export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
     const businessGroupId = searchParams.get('businessGroupId');
     const status = searchParams.get('status') === 'true';
+    const companyName = searchParams.get('companyName');
 
     if (businessGroupId) {
         try {
@@ -14,6 +15,7 @@ export async function GET(req: Request) {
                 where: {
                     businessGroupId: parseInt(businessGroupId, 10),
                     status: status,
+                    ...(companyName && { name: { contains: companyName } }),
                 },
             });
             return NextResponse.json(companies, { status: 200 });
