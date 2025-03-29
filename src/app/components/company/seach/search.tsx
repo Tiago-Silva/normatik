@@ -5,6 +5,7 @@ import Select from "@/app/components/select/select";
 import styles from './seach.module.css';
 import Button from "@/app/components/button/button";
 import { FaFileExport, FaSearch } from "react-icons/fa";
+import Input from "@/app/components/input/input";
 
 const statusOptions = [
     { value: true, label: 'Ativo' },
@@ -16,7 +17,9 @@ interface Props {
     status: boolean;
     onSelectBusinessGroup: (businessGroup: BusinessGroup) => void;
     onSelectStatus: (status: boolean) => void;
-    onSearchBusinessGroup: (businessGroup: BusinessGroup, status: boolean) => void;
+    onSearchBusinessGroup: (businessGroup: BusinessGroup, status: boolean, companyName: string) => void;
+    companyName: string;
+    onSelectCompanyName: (companyName: string) => void;
 }
 
 const SearchCompany: React.FC<Props> = (
@@ -25,7 +28,9 @@ const SearchCompany: React.FC<Props> = (
         businessGroup,
         onSelectBusinessGroup,
         onSelectStatus,
-        onSearchBusinessGroup
+        onSearchBusinessGroup,
+        companyName,
+        onSelectCompanyName,
     }) => {
     const [businessGroupList, setBusinessGroupList] = useState<BusinessGroup[]>([]);
 
@@ -33,7 +38,7 @@ const SearchCompany: React.FC<Props> = (
         const businessService = new BusinessGroupService();
         const data = await businessService.getAllBusinessGroups();
         setBusinessGroupList(data);
-        onSearchBusinessGroup(data[0], true);
+        onSearchBusinessGroup(data[0], true, '');
     }
 
     const handleSelectBusinessGroup = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -70,12 +75,16 @@ const SearchCompany: React.FC<Props> = (
             </div>
 
             <div className={styles.wrapper}>
+                <Input label={'Nome'} width={'500px'} value={companyName} onChange={e => onSelectCompanyName(e.target.value)} />
+            </div>
+
+            <div className={styles.wrapper}>
                 <Button
                     title={'Buscar'}
                     icon={FaSearch}
                     background={'#31b331'}
                     width={'300px'}
-                    onClick={() => onSearchBusinessGroup(businessGroup, status)}
+                    onClick={() => onSearchBusinessGroup(businessGroup, status, companyName)}
                 />
 
                 <Button
