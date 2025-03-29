@@ -49,7 +49,7 @@ export class CompanyService {
         return this.request(`/api/company/${id}`, { method: 'DELETE' });
     }
 
-    async getCompaniesByBusinessGroupAndStatus(businessGroupId: number, status: boolean): Promise<Company[]> {
-        return this.request(`/api/company/search?businessGroupId=${businessGroupId}&status=${status}`, { method: 'GET' });
+    async getCompaniesByBusinessGroupAndStatus(businessGroupId: number, status: boolean, companyName: string): Promise<Company[]> {
+        return this.request(`/api/company/search?businessGroupId=${businessGroupId}&status=${status}&companyName=${companyName}`, { method: 'GET' });
     }
 }
