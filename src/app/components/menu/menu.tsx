@@ -16,7 +16,7 @@ const SidebarMenu = [
             { icon: <FaUsers />, label: "Grupo/Cliente", path: "/group" },
             { icon: <FaBuilding />, label: "Empresa", path: "/company" },
             { icon: <FaBuilding />, label: "Unidade", path: "/cadastro/unidade" },
-            { icon: <FaBuilding />, label: "Setor", path: "/cadastro/setor" },
+            { icon: <FaBuilding />, label: "Setor", path: "/sector" },
             { icon: <FaBuilding />, label: "Função", path: "/cadastro/funcao" },
             { icon: <FaUsers />, label: "Funcionários", path: "/cadastro/funcionarios" },
             { icon: <FaFolder />, label: "Importados", path: "/cadastro/importados" },
