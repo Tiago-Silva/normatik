@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "IndexMed",
-  description: "IndexMed",
+  title: "NormaTik",
+  description: "NormaTik",
 };
 
 export default function RootLayout({
