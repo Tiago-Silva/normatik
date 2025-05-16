@@ -59,7 +59,7 @@ model Doctor {
 }
 
 model Sector {
-  id        String  @id @default(uuid())
+  id        Int      @id @default(autoincrement())
   name      String
   nameRef   String
   description String
@@ -80,7 +80,7 @@ model Sector {
 model Function {
   id       String  @id @default(uuid())
   name     String
-  sectorId String
+  sectorId Int
   sector   Sector @relation(fields: [sectorId], references: [id])
   employees Employee[]
 }
@@ -90,7 +90,7 @@ model Employee {
   name       String
   functionId String
   function   Function @relation(fields: [functionId], references: [id])
-  sectorId   String
+  sectorId   Int
   sector     Sector @relation(fields: [sectorId], references: [id])
   branchId   String
   branch     Branch @relation(fields: [branchId], references: [id])
