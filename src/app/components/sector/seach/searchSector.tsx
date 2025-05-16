@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { BusinessGroup } from '@/app/interface/BusinessGroup';
 import Select from "@/app/components/select/select";
 import styles from './searchSector.module.css';
 import Button from "@/app/components/button/button";
 import { FaFileExport, FaSearch } from "react-icons/fa";
 import {Company} from "@/app/interface/Company";
+import {BusinessGroupService} from "@/app/service/BusinessGroupService";
+import {CompanyService} from "@/app/service/CompanyService";
 
 const statusOptions = [
     { value: true, label: 'Ativo' },
@@ -12,40 +14,59 @@ const statusOptions = [
 ];
 
 interface Props {
-    businessGroup: BusinessGroup;
     company: Company;
+    onSetCompany: (company: Company) => void;
     status: boolean;
-    onSelectBusinessGroup: (businessGroup: BusinessGroup) => void;
     onSelectStatus: (status: boolean) => void;
     onSearchBusinessGroup: (businessGroup: BusinessGroup, status: boolean, companyName: string) => void;
 }
 
 const SearchSector: React.FC<Props> = (
     {
-        businessGroup,
         company,
+        onSetCompany,
         status,
-        onSelectBusinessGroup,
         onSelectStatus,
         onSearchBusinessGroup,
     }
 ) => {
     const [businessGroupList, setBusinessGroupList] = useState<BusinessGroup[]>([]);
     const [companyList, setCompanyList] = useState<Company[]>([]);
+    const [businessGroup, setBusinessGroup] = useState<BusinessGroup>({} as BusinessGroup);
 
-    const handleSelectBusinessGroup = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const handleSelectBusinessGroup = async (event: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedGroup = JSON.parse(event.target.value) as BusinessGroup;
-        onSelectBusinessGroup(selectedGroup);
+        setBusinessGroup(selectedGroup);
+        await handleGetCompaniesByBusinessGroupAndStatus(selectedGroup, status, '');
     };
 
+    const handleGetAllBusinessGroup = async () => {
+        const businessService = new BusinessGroupService();
+        const data = await businessService.getAllBusinessGroups();
+        setBusinessGroupList(data);
+        await handleGetCompaniesByBusinessGroupAndStatus(data[0], true, '');
+    }
+
+    const handleGetCompaniesByBusinessGroupAndStatus = async (group: BusinessGroup, status: boolean, companyName: string) => {
+        const service = new CompanyService();
+        const data = await service.getCompaniesByBusinessGroupAndStatus(group.id, status, companyName);
+        onSetCompany(data[0]);
+        setCompanyList(data);
+    }
+
+
     const handleSelectCompany = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        // const selectedGroup = JSON.parse(event.target.value) as BusinessGroup;
+        onSetCompany(JSON.parse(event.target.value) as Company);
         // onSelectBusinessGroup(selectedGroup);
     };
 
     const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         onSelectStatus(event.target.value === 'true');
     };
+
+    useEffect(() => {
+        handleGetAllBusinessGroup().then();
+    }, []);
 
     return (
         <div className={styles.container}>
