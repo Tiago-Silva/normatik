@@ -8,6 +8,7 @@ import {BusinessGroup} from "@/app/interface/BusinessGroup";
 import {Company} from "@/app/interface/Company";
 import List from "@/app/components/list/list";
 import {Sector} from "@/app/interface/Sector";
+import FormSector from "@/app/components/sector/form";
 
 const columns = [
     { header: 'Cód: Setor', accessor: (item: Sector) => item.id },
@@ -17,10 +18,15 @@ const columns = [
 ];
 
 const SectorComponent = () => {
-    const [businessGroup, setBusinessGroup] = useState<BusinessGroup>({} as BusinessGroup);
+    const [showForm, setShowForm] = useState(false);
+    // const [businessGroup, setBusinessGroup] = useState<BusinessGroup>({} as BusinessGroup);
     const [company, setCompany] = useState<Company>({} as Company);
     const [status, setStatus] = useState<boolean>(true);
     const [filteredSectorList, setFilteredSectorList] = useState<Sector[]>([]);
+
+    const handleShowForm = () => {
+        setShowForm(!showForm);
+    };
 
     const handleGetCompaniesByBusinessGroupAndStatus = async (group: BusinessGroup, status: boolean, companyName: string) => {
         // setBusinessGroup(group);
@@ -30,21 +36,35 @@ const SectorComponent = () => {
         // setFilteredCompanyList(data);
     }
 
+    const handleUpdateSectorListWhenSaving = () => {
+        // handleGetCompaniesByBusinessGroupAndStatus(businessGroup, true, '').then();
+        handleShowForm();
+    }
+
     return (
         <div className={styles.container}>
-            <HeaderSector />
-            <SearchSector
-                businessGroup={businessGroup}
-                company={company}
-                status={status}
-                onSelectBusinessGroup={setBusinessGroup}
-                onSelectStatus={setStatus}
-                onSearchBusinessGroup={handleGetCompaniesByBusinessGroupAndStatus}
-            />
-            <List<Sector>
-                list={filteredSectorList}
-                columns={columns}
-            />
+            <HeaderSector isShow={showForm} onClickButton={handleShowForm} />
+            {showForm ? (
+                <FormSector
+                    company={company}
+                    onShowForm={handleShowForm}
+                    onUpdateCompanyListWhenSaving={handleUpdateSectorListWhenSaving}
+                />
+            ) : (
+              <>
+                  <SearchSector
+                      company={company}
+                      onSetCompany={setCompany}
+                      status={status}
+                      onSelectStatus={setStatus}
+                      onSearchBusinessGroup={handleGetCompaniesByBusinessGroupAndStatus}
+                  />
+                  <List<Sector>
+                      list={filteredSectorList}
+                      columns={columns}
+                  />
+              </>
+            )}
         </div>
     );
 };
