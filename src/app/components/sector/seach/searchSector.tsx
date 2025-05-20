@@ -18,7 +18,7 @@ interface Props {
     onSetCompany: (company: Company) => void;
     status: boolean;
     onSelectStatus: (status: boolean) => void;
-    onSearchBusinessGroup: (businessGroup: BusinessGroup, status: boolean, companyName: string) => void;
+    onSearchSectors: (companyId: number, status: boolean) => void;
 }
 
 const SearchSector: React.FC<Props> = (
@@ -27,7 +27,7 @@ const SearchSector: React.FC<Props> = (
         onSetCompany,
         status,
         onSelectStatus,
-        onSearchBusinessGroup,
+        onSearchSectors,
     }
 ) => {
     const [businessGroupList, setBusinessGroupList] = useState<BusinessGroup[]>([]);
@@ -104,7 +104,7 @@ const SearchSector: React.FC<Props> = (
                     icon={FaSearch}
                     background={'#31b331'}
                     width={'300px'}
-                    onClick={() => onSearchBusinessGroup(businessGroup, status, company.name)}
+                    onClick={() => onSearchSectors(company.id, status)}
                 />
 
                 <Button
