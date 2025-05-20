@@ -9,6 +9,7 @@ import {Company} from "@/app/interface/Company";
 import List from "@/app/components/list/list";
 import {Sector} from "@/app/interface/Sector";
 import FormSector from "@/app/components/sector/form";
+import {SectorService} from "@/app/service/SectorService";
 
 const columns = [
     { header: 'Cód: Setor', accessor: (item: Sector) => item.id },
@@ -28,16 +29,15 @@ const SectorComponent = () => {
         setShowForm(!showForm);
     };
 
-    const handleGetCompaniesByBusinessGroupAndStatus = async (group: BusinessGroup, status: boolean, companyName: string) => {
-        // setBusinessGroup(group);
-        // setStatus(status);
-        // const service = new CompanyService();
-        // const data = await service.getCompaniesByBusinessGroupAndStatus(group.id, status, companyName);
-        // setFilteredCompanyList(data);
+    const handleGetSectorByCompanyIdAndSectorStatus = async (companyId: number, status: boolean) => {
+        setStatus(status);
+        const service = new SectorService();
+        const data = await service.getSectorsByCompanyIdAndStatus(companyId, status);
+        setFilteredSectorList(data);
     }
 
     const handleUpdateSectorListWhenSaving = () => {
-        // handleGetCompaniesByBusinessGroupAndStatus(businessGroup, true, '').then();
+        // handleGetSectorByCompanyIdAndSectorStatus(businessGroup, true, '').then();
         handleShowForm();
     }
 
@@ -57,7 +57,7 @@ const SectorComponent = () => {
                       onSetCompany={setCompany}
                       status={status}
                       onSelectStatus={setStatus}
-                      onSearchBusinessGroup={handleGetCompaniesByBusinessGroupAndStatus}
+                      onSearchSectors={handleGetSectorByCompanyIdAndSectorStatus}
                   />
                   <List<Sector>
                       list={filteredSectorList}
