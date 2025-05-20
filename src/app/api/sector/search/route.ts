@@ -10,13 +10,13 @@ export async function GET(req: Request) {
 
     if (companyId) {
         try {
-            const companies = await prisma.company.findMany({
+            const sectors = await prisma.sector.findMany({
                 where: {
-                    businessGroupId: parseInt(companyId, 10),
+                    companyId: parseInt(companyId, 10),
                     status: status,
                 },
             });
-            return NextResponse.json(companies, { status: 200 });
+            return NextResponse.json(sectors, { status: 200 });
         } catch (error: any) {
             console.error("Error ao buscar setores:", error.message || error);
             return NextResponse.json(
