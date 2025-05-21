@@ -25,18 +25,15 @@ export interface NewSector {
     status: boolean;
     sendDescription: boolean;
     includeBuilding: boolean;
-    branchId: string;
-    branch: string;
-    company: string;
+    branchId?: string;
     companyId: number;
     createdAt: Date;
-    updatedAt: Date;
 }
 
 export const SectorDTO = z.object({
-    name: z.string().min(4, { message: "O nome deve ter pelo menos 4 caracteres" }),
+    // name: z.string().min(4, { message: "O nome deve ter pelo menos 4 caracteres" }),
     company: z.object({
-        id: z.number({ required_error: "O ID da empresa é obrigatório"})
+        id: z.number({ required_error: "O ID da empresa é obrigatório"}),
     }),
     nameRef: z.string().min(4, { message: "O nome de referência deve ter pelo menos 4 caracteres" }),
     internalCode: z.string({ required_error: "O código interno é obrigatório" }),

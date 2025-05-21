@@ -67,9 +67,9 @@ model Sector {
   status    Boolean
   sendDescription  Boolean
   includeBuilding  Boolean
-  branchId  String
+  branchId  String?
   companyId Int
-  branch    Branch @relation(fields: [branchId], references: [id])
+  branch    Branch? @relation(fields: [branchId], references: [id])
   company   Company @relation(fields: [companyId], references: [id])
   functions Function[]
   employees Employee[]

@@ -10,7 +10,8 @@ import { Company } from "@/app/interface/Company";
 import { zodResolver } from "@hookform/resolvers/zod";
 import InputZod from "@/app/components/input/InputZod";
 import Input from "@/app/components/input/input";
-import {SectorDTO} from "@/app/interface/Sector";
+import {NewSector, SectorDTO} from "@/app/interface/Sector";
+import {SectorService} from "@/app/service/SectorService";
 
 export type sectorData = z.infer<typeof SectorDTO>;
 
@@ -30,16 +31,36 @@ const FormSector: React.FC<Props> = (
     const { register, setValue, handleSubmit, formState: { errors, isValid } } = useForm<sectorData>({
         resolver: zodResolver(SectorDTO),
         mode: 'onChange',
+        defaultValues: {
+            company: company
+        }
     });
 
-    const handleCreateCompany = async (data: sectorData) => {
-        console.log(data);
+    const handleCreateSector = async (data: sectorData) => {
+        const newSector: NewSector = {
+            name: data.nameRef,
+            description: data.description,
+            nameRef: data.nameRef,
+            internalCode: data.internalCode,
+            status: data.status || false,
+            sendDescription: data.sendDescription || false,
+            includeBuilding: data.includeBuilding || false,
+            companyId: data.company.id,
+            createdAt: new Date()
+        }
+
+        const service = new SectorService();
+        try {
+            await service.createSector(newSector);
+        } catch (error) {
+            console.error('Error creating sector', error);
+        }
     };
 
     return (
         <div className={styles.container}>
             <h2 className={styles.title}><FaFileAlt /> Dados do Setor <span>*</span>:</h2>
-            <form onSubmit={handleSubmit(handleCreateCompany)}>
+            <form onSubmit={handleSubmit(handleCreateSector)}>
 
                 <Input
                     label={'Empresa:'}
@@ -77,7 +98,7 @@ const FormSector: React.FC<Props> = (
                 />
                 <div className={styles.wrapperButton}>
                     <Button
-                        title={company ? 'Alterar' : 'Salvar'}
+                        title={'Salvar'}
                         icon={FaSave}
                         width={'250px'}
                         background={'#295A9C'}
