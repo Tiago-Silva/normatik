@@ -22,6 +22,7 @@ const SectorComponent = () => {
     const [company, setCompany] = useState<Company>({} as Company);
     const [status, setStatus] = useState<boolean>(true);
     const [filteredSectorList, setFilteredSectorList] = useState<Sector[]>([]);
+    const [sector, setSector] = useState<Sector>({} as Sector);
 
     const handleShowForm = () => {
         setShowForm(!showForm);
@@ -36,6 +37,12 @@ const SectorComponent = () => {
 
     const handleUpdateSectorListWhenSaving = () => {
         handleShowForm();
+    }
+
+    const handleEditSector = (data: Sector) => {
+        setSector(data);
+        console.log(JSON.stringify(data));
+        // setShowForm(!showForm);
     }
 
     return (
@@ -59,6 +66,7 @@ const SectorComponent = () => {
                   <List<Sector>
                       list={filteredSectorList}
                       columns={columns}
+                      onEditItem={handleEditSector}
                   />
               </>
             )}
