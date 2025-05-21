@@ -4,7 +4,6 @@ import React, {useState} from 'react';
 import styles from './sector-component.module.css';
 import HeaderSector from "./header";
 import SearchSector from "@/app/components/sector/seach/searchSector";
-import {BusinessGroup} from "@/app/interface/BusinessGroup";
 import {Company} from "@/app/interface/Company";
 import List from "@/app/components/list/list";
 import {Sector} from "@/app/interface/Sector";
@@ -20,7 +19,6 @@ const columns = [
 
 const SectorComponent = () => {
     const [showForm, setShowForm] = useState(false);
-    // const [businessGroup, setBusinessGroup] = useState<BusinessGroup>({} as BusinessGroup);
     const [company, setCompany] = useState<Company>({} as Company);
     const [status, setStatus] = useState<boolean>(true);
     const [filteredSectorList, setFilteredSectorList] = useState<Sector[]>([]);
@@ -37,7 +35,6 @@ const SectorComponent = () => {
     }
 
     const handleUpdateSectorListWhenSaving = () => {
-        // handleGetSectorByCompanyIdAndSectorStatus(businessGroup, true, '').then();
         handleShowForm();
     }
 
