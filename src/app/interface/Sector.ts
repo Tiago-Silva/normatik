@@ -1,4 +1,5 @@
 import {z} from "zod";
+import {Company} from "@/app/interface/Company";
 
 export interface Sector {
     id: number;
@@ -9,9 +10,9 @@ export interface Sector {
     status: boolean;
     sendDescription: boolean;
     includeBuilding: boolean;
-    branchId: string;
-    branch: string;
-    company: string;
+    branchId?: string;
+    branch?: string;
+    company?: Company;
     companyId: number;
     createdAt: Date;
     updatedAt: Date;

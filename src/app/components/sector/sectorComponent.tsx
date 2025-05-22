@@ -41,8 +41,7 @@ const SectorComponent = () => {
 
     const handleEditSector = (data: Sector) => {
         setSector(data);
-        console.log(JSON.stringify(data));
-        // setShowForm(!showForm);
+        setShowForm(!showForm);
     }
 
     return (
@@ -51,6 +50,7 @@ const SectorComponent = () => {
             {showForm ? (
                 <FormSector
                     company={company}
+                    sector={sector}
                     onShowForm={handleShowForm}
                     onUpdateCompanyListWhenSaving={handleUpdateSectorListWhenSaving}
                 />
