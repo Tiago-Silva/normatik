@@ -1,31 +1,50 @@
 "use client";
 
 import React, {useState} from "react";
-import { FaHome, FaUsers, FaBuilding, FaFileAlt, FaCogs, FaFolder, FaChevronRight, FaChevronDown } from "react-icons/fa";
+import {
+    FaHome,
+    FaTruck,
+    FaClipboardList,
+    FaUsers,
+    FaBuilding, // Para Empresa (matriz)
+    FaRegBuilding, // Para Unidade (filial) - uma construção menor ou diferente
+    FaCubes, // Para Setor (departamento) - blocos que formam um todo
+    FaFileAlt,
+    FaCogs,
+    FaFolder,
+    FaChevronRight,
+    FaChevronDown,
+    FaUserPlus,
+    FaUserTie,
+    FaFileUpload,
+    FaScroll,
+    FaShieldAlt,
+    FaArchive,
+} from "react-icons/fa";
 import styles from "./menu.module.css";
 import Submenu from "@/app/components/submenu/submenu";
 
 const SidebarMenu = [
-    { icon: <FaHome />, label: "Início", path: "/" },
-    { icon: <FaHome />, label: "Guia express", path: "/guia-express" },
-    { icon: <FaHome />, label: "Meus pedidos", path: "/meus-pedidos" },
+    {icon: <FaHome/>, label: "Início", path: "/"},
+    {icon: <FaTruck/>, label: "Guia express", path: "/guia-express"},
+    {icon: <FaClipboardList/>, label: "Meus pedidos", path: "/meus-pedidos"},
     {
-        icon: <FaHome />,
+        icon: <FaUserPlus/>,
         label: "Cadastro",
         submenus: [
-            { icon: <FaUsers />, label: "Grupo/Cliente", path: "/group" },
-            { icon: <FaBuilding />, label: "Empresa", path: "/company" },
-            { icon: <FaBuilding />, label: "Unidade", path: "/cadastro/unidade" },
-            { icon: <FaBuilding />, label: "Setor", path: "/sector" },
-            { icon: <FaBuilding />, label: "Função", path: "/cadastro/funcao" },
-            { icon: <FaUsers />, label: "Funcionários", path: "/cadastro/funcionarios" },
-            { icon: <FaFolder />, label: "Importados", path: "/cadastro/importados" },
-            { icon: <FaFileAlt />, label: "Relatórios da estrutura", path: "/cadastro/relatorios-estrutura" },
+            {icon: <FaUsers/>, label: "Grupo/Cliente", path: "/group"},
+            {icon: <FaBuilding/>, label: "Empresa", path: "/company"}, // Ícone alterado
+            {icon: <FaRegBuilding/>, label: "Unidade", path: "/cadastro/unidade"}, // Ícone alterado
+            {icon: <FaCubes/>, label: "Setor", path: "/sector"}, // Ícone alterado
+            {icon: <FaUserTie/>, label: "Função", path: "/cadastro/funcao"},
+            {icon: <FaUsers/>, label: "Funcionários", path: "/cadastro/funcionarios"},
+            {icon: <FaFileUpload/>, label: "Importados", path: "/cadastro/importados"},
+            {icon: <FaScroll/>, label: "Relatórios da estrutura", path: "/cadastro/relatorios-estrutura"},
         ],
     },
-    { icon: <FaFileAlt />, label: "Certificado Digital", path: "/certificado-digital" },
-    { icon: <FaCogs />, label: "Gestão de Segurança", path: "/gestao-seguranca" },
-    { icon: <FaFolder />, label: "ArquivoMed", path: "/arquivomed" },
+    {icon: <FaShieldAlt/>, label: "Certificado Digital", path: "/certificado-digital"},
+    {icon: <FaCogs/>, label: "Gestão de Segurança", path: "/gestao-seguranca"},
+    {icon: <FaArchive/>, label: "ArquivoMed", path: "/arquivomed"},
 ];
 
 const Menu = () => {
@@ -48,12 +67,12 @@ const Menu = () => {
                             <span>{item.label}</span>
                             {item.submenus && (
                                 <span className={styles.chevron}>
-                                    {expandedMenu === item.label ? <FaChevronDown /> : <FaChevronRight />}
+                                    {expandedMenu === item.label ? <FaChevronDown/> : <FaChevronRight/>}
                                 </span>
                             )}
                         </div>
                         {item.submenus && expandedMenu === item.label && (
-                            <Submenu submenus={item.submenus} />
+                            <Submenu submenus={item.submenus}/>
                         )}
                     </li>
                 ))}
