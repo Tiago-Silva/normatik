@@ -13,18 +13,19 @@
 }
 
 .submenuItem:hover {
-    color: var(--menu-hover);
+    color: var(--accent-blue-light);
+    background-color: var(--light-gray);
 }
 
 .submenuItem .icon {
     font-size: 1.2rem;
     margin-right: 10px;
-    color: var(--gray02);
+    color: var(--accent-blue-light);
 }
 
 .selected {
-    background-color: var(--menu-hover);
-    color: var(--white);
+    background-color: var(--background);
+    color: var(--accent-blue-light);
     width: 100%;
     display: flex;
     align-items: center;
@@ -36,5 +37,5 @@
 .selected .icon {
     font-size: 1.2rem;
     margin-right: 10px;
-    color: var(--white);
+    color: var(--accent-blue-light);
 }
