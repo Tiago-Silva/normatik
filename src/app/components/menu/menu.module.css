@@ -16,7 +16,7 @@
 }
 
 .navItem:hover {
-    background-color: var(--background);
+    background-color: var(--light-gray);
 }
 
 .menuItem {
@@ -28,11 +28,12 @@
 .icon {
     font-size: 1.2rem;
     margin-right: 10px;
-    color: var(--menu-hover);
+    color: var(--accent-blue);
 }
 
 .chevron {
     margin-left: auto;
     font-size: 0.8rem;
-    color: var(--gray);
+    color: var(--medium-gray);
+    transition: transform 0.3s ease;
 }
