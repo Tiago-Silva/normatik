@@ -39,6 +39,7 @@ const SectorComponent = () => {
     }
 
     const handleUpdateSectorListWhenSaving = () => {
+        handleGetSectorByCompanyIdAndSectorStatus(company.id, true).then();
         handleShowForm();
     }
 
@@ -55,7 +56,7 @@ const SectorComponent = () => {
                     company={company}
                     sector={sector}
                     onShowForm={handleShowForm}
-                    onUpdateCompanyListWhenSaving={handleUpdateSectorListWhenSaving}
+                    onUpdateSectorListWhenSaving={handleUpdateSectorListWhenSaving}
                 />
             ) : (
               <>
