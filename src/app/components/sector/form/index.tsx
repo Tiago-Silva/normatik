@@ -20,7 +20,7 @@ interface Props {
     company?: Company;
     sector?: Sector;
     onShowForm: () => void;
-    onUpdateCompanyListWhenSaving: () => void;
+    onUpdateSectorListWhenSaving: () => void;
 }
 
 const FormSector: React.FC<Props> = (
@@ -28,6 +28,7 @@ const FormSector: React.FC<Props> = (
         company,
         sector,
         onShowForm,
+        onUpdateSectorListWhenSaving,
     }) => {
 
     const {register, setValue, handleSubmit, formState: {errors, isValid}} = useForm<sectorData>({
@@ -44,7 +45,7 @@ const FormSector: React.FC<Props> = (
             description: data.description,
             nameRef: data.nameRef,
             internalCode: data.internalCode,
-            status: data.status || false,
+            status: data.status || true,
             sendDescription: data.sendDescription || false,
             includeBuilding: data.includeBuilding || false,
             companyId: data.company.id,
@@ -53,7 +54,9 @@ const FormSector: React.FC<Props> = (
 
         const service = new SectorService();
         try {
+            console.log('newSector: ', JSON.stringify(newSector));
             await service.createSector(newSector);
+            onUpdateSectorListWhenSaving();
         } catch (error) {
             console.error('Error creating sector', error);
         }
@@ -72,6 +75,7 @@ const FormSector: React.FC<Props> = (
         };
 
         const service = new SectorService();
+        onUpdateSectorListWhenSaving();
         try {
             await service.updateSector(updateSector);
         } catch (error) {
