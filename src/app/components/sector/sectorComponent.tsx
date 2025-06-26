@@ -25,6 +25,9 @@ const SectorComponent = () => {
     const [sector, setSector] = useState<Sector>({} as Sector);
 
     const handleShowForm = () => {
+        if (!showForm && sector) {
+            setSector({} as Sector);
+        }
         setShowForm(!showForm);
     };
 

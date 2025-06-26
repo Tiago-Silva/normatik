@@ -93,7 +93,7 @@ const FormSector: React.FC<Props> = (
     return (
         <div className={styles.container}>
             <h2 className={styles.title}><FaFileAlt/> Dados do Setor <span>*</span>:</h2>
-            <form onSubmit={handleSubmit(sector ? handleEditSector : handleCreateSector)}>
+            <form onSubmit={handleSubmit(sector?.id ? handleEditSector : handleCreateSector)}>
 
                 <Input
                     label={'Empresa:'}
@@ -132,7 +132,7 @@ const FormSector: React.FC<Props> = (
                 />
                 <div className={styles.wrapperButton}>
                     <Button
-                        title={sector ? 'Alterar' : 'Salvar'}
+                        title={sector?.id ? 'Alterar' : 'Salvar'}
                         icon={FaSave}
                         width={'250px'}
                         background={'#295A9C'}
