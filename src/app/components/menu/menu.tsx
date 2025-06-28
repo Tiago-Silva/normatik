@@ -36,7 +36,7 @@ const SidebarMenu = [
             {icon: <FaBuilding/>, label: "Empresa", path: "/company"}, // Ícone alterado
             {icon: <FaRegBuilding/>, label: "Unidade", path: "/cadastro/unidade"}, // Ícone alterado
             {icon: <FaCubes/>, label: "Setor", path: "/sector"}, // Ícone alterado
-            {icon: <FaUserTie/>, label: "Função", path: "/cadastro/funcao"},
+            {icon: <FaUserTie/>, label: "Função", path: "/function"},
             {icon: <FaUsers/>, label: "Funcionários", path: "/cadastro/funcionarios"},
             {icon: <FaFileUpload/>, label: "Importados", path: "/cadastro/importados"},
             {icon: <FaScroll/>, label: "Relatórios da estrutura", path: "/cadastro/relatorios-estrutura"},
