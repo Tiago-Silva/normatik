@@ -1,5 +1,5 @@
-# indexmed
-IndexMed
+# NORMATIK
+NORMATIK
 
 
 #1 Ao criar uma nova branch roda estes comandos:
