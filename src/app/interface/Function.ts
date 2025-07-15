@@ -1,4 +1,4 @@
-import {Sector} from "@/app/interface/Sector";
+import {Company} from "@/app/interface/Company";
 
 
 export interface Function {
@@ -7,11 +7,12 @@ export interface Function {
     code: number;
     cbo: string;
     description: string;
+    status: boolean;
     createdAt: Date;
     updatedAt: Date;
     editedBy: string;
-    sectorId: number;
-    sector?: Sector;
+    companyId: number;
+    company?: Company;
 }
 
 export interface NewFunction {
@@ -20,5 +21,25 @@ export interface NewFunction {
     cbo: string;
     description: string;
     createdAt: Date;
-    sectorId: number;
+    companyId: number;
+}
+
+export interface SearchFilters {
+    company: Company;
+    name: string;
+    code: string;
+    status: boolean;
+}
+
+export interface SearchActions {
+    onSetCompany: (company: Company) => void;
+    onSetName: (name: string) => void;
+    onSetCode: (code: string) => void;
+    onSelectStatus: (status: boolean) => void;
+    onSearchFunctions: (companyId: number, status: boolean) => void;
+}
+
+export interface SearchFunctionProps {
+    filters: SearchFilters;
+    actions: SearchActions;
 }
