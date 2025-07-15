@@ -86,6 +86,7 @@ model Function {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   editedBy    String
+  status      Boolean
   sectorId Int
   sector   Sector @relation(fields: [sectorId], references: [id])
   employees Employee[]
