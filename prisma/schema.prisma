@@ -78,7 +78,7 @@ model Sector {
 }
 
 model Function {
-  id       String  @id @default(uuid())
+  id       Int      @id @default(autoincrement())
   name     String
   code     Int
   cbo      String
@@ -95,7 +95,7 @@ model Function {
 model Employee {
   id         String   @id @default(uuid())
   name       String
-  functionId String
+  functionId Int
   function   Function @relation(fields: [functionId], references: [id])
   sectorId   Int
   sector     Sector @relation(fields: [sectorId], references: [id])
