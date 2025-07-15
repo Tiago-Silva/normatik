@@ -31,14 +31,14 @@ export class FunctionService {
                 createAt: func.createdAt ?? undefined,
                 updateAt: func.updatedAt ?? undefined,
                 editedBy: func.editedBy ?? undefined,
-                sectorId: func.sectorId ?? undefined,
-                sector: func.sector,
+                companyId: func.companyId ?? undefined,
+                company: func.company,
             })
         })
     }
 
-    async getFunctionBySectorIdAndStatus(sectorId: number, status: boolean): Promise<Sector[]> {
-        return this.request(`/api/function/search?sectorId=${sectorId}&status=${status}`, { method: 'GET' });
+    async getFunctionByCompanyIdAndStatus(companyId: number, status: boolean): Promise<Function[]> {
+        return this.request(`/api/function/search?companyId=${companyId}&status=${status}`, { method: 'GET' });
     }
 
 }
