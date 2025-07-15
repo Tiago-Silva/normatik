@@ -30,6 +30,7 @@ model Company {
     businessGroup   BusinessGroup?  @relation(fields: [businessGroupId], references: [id])
     branches        Branch[]
     sectors         Sector[]
+    functions       Function[]
     registrationType String
     fantasyName     String
     cnae            String
@@ -71,7 +72,6 @@ model Sector {
   companyId Int
   branch    Branch? @relation(fields: [branchId], references: [id])
   company   Company @relation(fields: [companyId], references: [id])
-  functions Function[]
   employees Employee[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -87,8 +87,8 @@ model Function {
   updatedAt   DateTime @updatedAt
   editedBy    String
   status      Boolean
-  sectorId Int
-  sector   Sector @relation(fields: [sectorId], references: [id])
+  companyId Int
+  company   Company @relation(fields: [companyId], references: [id])
   employees Employee[]
 }
 

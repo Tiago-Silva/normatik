@@ -7,6 +7,8 @@ import { FaFileExport, FaSearch } from "react-icons/fa";
 import {Company} from "@/app/interface/Company";
 import {BusinessGroupService} from "@/app/service/BusinessGroupService";
 import {CompanyService} from "@/app/service/CompanyService";
+import Input from "@/app/components/input/input";
+import {SearchActions, SearchFilters} from "@/app/interface/Function";
 
 const statusOptions = [
     { value: true, label: 'Ativo' },
@@ -14,20 +16,14 @@ const statusOptions = [
 ];
 
 interface Props {
-    company: Company;
-    onSetCompany: (company: Company) => void;
-    status: boolean;
-    onSelectStatus: (status: boolean) => void;
-    onSearchSectors: (companyId: number, status: boolean) => void;
+    searchFilters: SearchFilters;
+    searchActions: SearchActions;
 }
 
 const SearchFunction: React.FC<Props> = (
     {
-        company,
-        onSetCompany,
-        status,
-        onSelectStatus,
-        onSearchSectors,
+        searchFilters,
+        searchActions
     }
 ) => {
     const [businessGroupList, setBusinessGroupList] = useState<BusinessGroup[]>([]);
@@ -37,7 +33,7 @@ const SearchFunction: React.FC<Props> = (
     const handleSelectBusinessGroup = async (event: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedGroup = JSON.parse(event.target.value) as BusinessGroup;
         setBusinessGroup(selectedGroup);
-        await handleGetCompaniesByBusinessGroupAndStatus(selectedGroup, status, '');
+        await handleGetCompaniesByBusinessGroupAndStatus(selectedGroup, selectedGroup.status, '');
     };
 
     const handleGetAllBusinessGroup = async () => {
@@ -50,18 +46,18 @@ const SearchFunction: React.FC<Props> = (
     const handleGetCompaniesByBusinessGroupAndStatus = async (group: BusinessGroup, status: boolean, companyName: string) => {
         const service = new CompanyService();
         const data = await service.getCompaniesByBusinessGroupAndStatus(group.id, status, companyName);
-        onSetCompany(data[0]);
+        searchActions.onSetCompany(data[0]);
         setCompanyList(data);
     }
 
 
     const handleSelectCompany = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        onSetCompany(JSON.parse(event.target.value) as Company);
+        searchActions.onSetCompany(JSON.parse(event.target.value) as Company);
         // onSelectBusinessGroup(selectedGroup);
     };
 
     const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        onSelectStatus(event.target.value === 'true');
+        searchActions.onSelectStatus(event.target.value === 'true');
     };
 
     useEffect(() => {
@@ -82,8 +78,24 @@ const SearchFunction: React.FC<Props> = (
                 <Select<Company>
                     label={'Empresa'}
                     options={companyList.map(group => ({ value: group, label: group.name }))}
-                    value={company}
+                    value={searchFilters.company}
                     onChange={handleSelectCompany}
+                    width={'300px'}
+                />
+            </div>
+
+            <div className={styles.wrapper}>
+                <Input
+                    label={'Nome/Referência'}
+                    value={searchFilters.name}
+                    onChange={(e) => searchActions.onSetName(e.target.value)}
+                    width={'300px'}
+                />
+
+                <Input
+                    label={'Código'}
+                    value={searchFilters.code}
+                    onChange={(e) => searchActions.onSetCode(e.target.value)}
                     width={'300px'}
                 />
             </div>
@@ -92,7 +104,7 @@ const SearchFunction: React.FC<Props> = (
                 <Select<boolean>
                     label={'Status'}
                     options={statusOptions}
-                    value={status}
+                    value={searchFilters.status}
                     onChange={handleStatusChange}
                     width={'300px'}
                 />
@@ -104,7 +116,7 @@ const SearchFunction: React.FC<Props> = (
                     icon={FaSearch}
                     background={'#31b331'}
                     width={'300px'}
-                    onClick={() => onSearchSectors(company.id, status)}
+                    onClick={() => searchActions.onSearchFunctions(searchFilters.company.id, searchFilters.status)}
                 />
 
                 <Button
