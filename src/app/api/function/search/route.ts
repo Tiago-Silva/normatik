@@ -5,14 +5,14 @@ const prisma = new PrismaClient();
 
 export async function GET(req: Request) {
     const {searchParams} = new URL(req.url);
-    const sectorId = searchParams.get('sectorId');
+    const companyId = searchParams.get('companyId');
     const status = searchParams.get('status') === 'true';
 
-    if (sectorId) {
+    if (companyId) {
         try {
             const functions = await prisma.function.findMany({
                 where: {
-                    sectorId: parseInt(sectorId, 10),
+                    companyId: parseInt(companyId, 10),
                     status: status,
                 },
             });
