@@ -2,77 +2,85 @@
 
 import React, {useState} from 'react';
 import styles from './function-component.module.css';
-import {Company} from "@/app/interface/Company";
 import List from "@/app/components/list/list";
-import {Sector} from "@/app/interface/Sector";
-import {SectorService} from "@/app/service/SectorService";
+import {Function} from "@/app/interface/Function";
 import HeaderFunction from "./header";
 import SearchFunction from "@/app/components/fuction/seach/searchFunction";
 import FormFunction from "@/app/components/fuction/form";
+import {useSearchFilters} from "@/app/hooks/useSearchFilters";
+import {FunctionService} from "@/app/service/FunctionService";
 
 const columns = [
-    { header: 'Cód: Setor', accessor: (item: Sector) => item.id },
-    { header: 'Nome', accessor: (item: Sector) => item.name },
-    { header: 'Nome/Ref', accessor: (item: Sector) => item.nameRef },
-    { header: 'Status', accessor: (item: Sector) => (item.status ? "Ativo" : "Inativo") },
+    {header: 'Cód: Função', accessor: (item: Function) => item.id},
+    {header: 'Nome', accessor: (item: Function) => item.name},
+    {header: 'Cod: Interno', accessor: (item: Function) => item.code},
+    {header: 'Status', accessor: (item: Function) => (item.status ? "Ativo" : "Inativo")},
 ];
 
 const FunctionComponent = () => {
     const [showForm, setShowForm] = useState(false);
-    const [company, setCompany] = useState<Company>({} as Company);
-    const [status, setStatus] = useState<boolean>(true);
-    const [filteredSectorList, setFilteredSectorList] = useState<Sector[]>([]);
-    const [sector, setSector] = useState<Sector>({} as Sector);
+    const [filteredFunctionList, setFilteredFunctionList] = useState<Function[]>([]);
+
+    const {filters, setStatus, setName, setCode, setCompany} = useSearchFilters();
+
+    const handleGetFunctionByCompanyIdAndStatus = async (companyId: number, status: boolean) => {
+        setStatus(status);
+        const service = new FunctionService();
+        const data = await service.getFunctionByCompanyIdAndStatus(companyId, status);
+        setFilteredFunctionList(data);
+    }
 
     const handleShowForm = () => {
-        if (!showForm && sector) {
-            setSector({} as Sector);
-        }
+        // if (!showForm && filters.sector) {
+        //     setSector({} as Sector);
+        // }
         setShowForm(!showForm);
     };
 
-    const handleGetSectorByCompanyIdAndSectorStatus = async (companyId: number, status: boolean) => {
-        setStatus(status);
-        const service = new SectorService();
-        const data = await service.getSectorsByCompanyIdAndStatus(companyId, status);
-        setFilteredSectorList(data);
-    }
+    // const handleGetSectorByCompanyIdAndSectorStatus = async (companyId: number, status: boolean) => {
+    //     setStatus(status);
+    //     const service = new SectorService();
+    //     const data = await service.getSectorsByCompanyIdAndStatus(companyId, status);
+    //     setFilteredSectorList(data);
+    // }
 
-    const handleUpdateSectorListWhenSaving = () => {
-        handleGetSectorByCompanyIdAndSectorStatus(company.id, true).then();
-        handleShowForm();
-    }
+    // const handleUpdateSectorListWhenSaving = () => {
+    //     handleGetSectorByCompanyIdAndSectorStatus(company.id, true).then();
+    //     handleShowForm();
+    // }
 
-    const handleEditSector = (data: Sector) => {
-        setSector(data);
-        setShowForm(!showForm);
-    }
+    // const handleEditSector = (data: Sector) => {
+    //     setSector(data);
+    //     setShowForm(!showForm);
+    // }
 
     return (
         <div className={styles.container}>
-            <HeaderFunction isShow={showForm} onClickButton={handleShowForm} />
+            <HeaderFunction isShow={showForm} onClickButton={handleShowForm}/>
             {showForm ? (
                 <FormFunction
-                    company={company}
-                    sector={sector}
                     onShowForm={handleShowForm}
-                    onUpdateSectorListWhenSaving={handleUpdateSectorListWhenSaving}
+                    onUpdateSectorListWhenSaving={() => {
+                    }}
                 />
             ) : (
-              <>
-                  <SearchFunction
-                      company={company}
-                      onSetCompany={setCompany}
-                      status={status}
-                      onSelectStatus={setStatus}
-                      onSearchSectors={handleGetSectorByCompanyIdAndSectorStatus}
-                  />
-                  <List<Sector>
-                      list={filteredSectorList}
-                      columns={columns}
-                      onEditItem={handleEditSector}
-                  />
-              </>
+                <>
+                    <SearchFunction
+                        searchFilters={filters}
+                        searchActions={{
+                            onSetCompany: setCompany,
+                            onSelectStatus: setStatus,
+                            onSearchFunctions: handleGetFunctionByCompanyIdAndStatus,
+                            onSetName: setName,
+                            onSetCode: setCode
+                        }}
+                    />
+                    <List<Function>
+                        list={filteredFunctionList}
+                        columns={columns}
+                        onEditItem={() => {}}
+                    />
+                </>
             )}
         </div>
     );
