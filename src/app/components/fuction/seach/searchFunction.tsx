@@ -93,9 +93,10 @@ const SearchFunction: React.FC<Props> = (
                 />
 
                 <Input
+                    type={'number'}
                     label={'Código'}
-                    value={searchFilters.code}
-                    onChange={(e) => searchActions.onSetCode(e.target.value)}
+                    value={String(searchFilters.code)}
+                    onChange={(e) => searchActions.onSetCode(parseInt(e.target.value))}
                     width={'300px'}
                 />
             </div>
