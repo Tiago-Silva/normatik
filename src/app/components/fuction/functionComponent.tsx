@@ -59,6 +59,7 @@ const FunctionComponent = () => {
             <HeaderFunction isShow={showForm} onClickButton={handleShowForm}/>
             {showForm ? (
                 <FormFunction
+                    company={filters.company}
                     onShowForm={handleShowForm}
                     onUpdateSectorListWhenSaving={() => {
                     }}

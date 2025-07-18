@@ -96,7 +96,7 @@ const FormFunction: React.FC<Props> = (
 
     return (
         <div className={styles.container}>
-            <h2 className={styles.title}><FaFileAlt/> Dados do Setor <span>*</span>:</h2>
+            <h2 className={styles.title}><FaFileAlt/> Dados da Função <span>*</span>:</h2>
             <form onSubmit={handleSubmit(sector?.id ? handleEditSector : handleCreateSector)}>
 
                 <Input
@@ -108,27 +108,13 @@ const FormFunction: React.FC<Props> = (
                 />
 
                 <InputZod label={'Nome/Referência:'} register={register('nameRef')} error={errors?.nameRef}/>
-                <InputZod label={'Código interno:'} register={register('internalCode')} error={errors?.internalCode}/>
+                <InputZod label={'Código interno:'} register={register('code')} error={errors?.internalCode}/>
                 <InputZod label={'Descrição:'} register={register('description')} error={errors?.description}/>
+                <InputZod label={'C.B.O:'} register={register('cbo')} error={errors?.description}/>
+
 
                 <ToggleSwitchZod
-                    label={'Enviar descrição assim para o eScocial ao invés do nome:'}
-                    name={'sendDescription'}
-                    isChecked={sector?.sendDescription || false}
-                    setValue={setValue}
-                    register={register('sendDescription')}
-                />
-
-                <ToggleSwitchZod
-                    label={'Incluir dados da Edificação:'}
-                    name={'includeBuilding'}
-                    isChecked={sector?.includeBuilding || false}
-                    setValue={setValue}
-                    register={register('includeBuilding')}
-                />
-
-                <ToggleSwitchZod
-                    label={'Status do Setor:'}
+                    label={'Status da Função:'}
                     name={'status'}
                     isChecked={sector?.status || true}
                     setValue={setValue}
