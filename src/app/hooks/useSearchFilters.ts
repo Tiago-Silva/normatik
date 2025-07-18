@@ -6,7 +6,7 @@ export const useSearchFilters = () => {
     const [filters, setFilters] = useState({
         company: {} as Company,
         name: '',
-        code: '',
+        code: 0,
         status: true,
     });
 
@@ -22,7 +22,7 @@ export const useSearchFilters = () => {
         updateFilter,
         setCompany: (company: Company) => updateFilter('company', company),
         setName: (name: string) => updateFilter('name', name),
-        setCode: (code: string) => updateFilter('code', code),
+        setCode: (code: number) => updateFilter('code', code),
         setStatus: (status: boolean) => updateFilter('status', status),
     };
 };

@@ -7,6 +7,7 @@ interface Props {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     width?: string;
     disabled?: boolean;
+    type?: string;
 }
 
 const Input: React.FC<Props> = (
@@ -15,7 +16,8 @@ const Input: React.FC<Props> = (
         value,
         onChange,
         width,
-        disabled
+        disabled,
+        type = 'text',
     }) => {
     return (
         <div className={styles.inputContainer}>
@@ -26,6 +28,7 @@ const Input: React.FC<Props> = (
                 value={value}
                 onChange={onChange}
                 disabled={disabled}
+                type={type}
             />
         </div>
     );
