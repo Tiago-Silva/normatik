@@ -23,10 +23,20 @@ const FunctionComponent = () => {
 
     const {filters, setStatus, setName, setCode, setCompany} = useSearchFilters();
 
-    const handleGetFunctionByCompanyIdAndStatus = async (companyId: number, status: boolean) => {
+    const handleGetFunctionByCompanyIdAndStatus = async (
+        companyId: number,
+        status: boolean,
+        functionName: string,
+        internalCode: number
+    ) => {
         setStatus(status);
         const service = new FunctionService();
-        const data = await service.getFunctionByCompanyIdAndStatus(companyId, status);
+        const data = await service.getFunctionByCompanyIdStatusNameAndCode(
+            companyId,
+            status,
+            functionName,
+            internalCode
+        );
         setFilteredFunctionList(data);
     }
 
