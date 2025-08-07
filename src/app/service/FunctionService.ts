@@ -37,8 +37,8 @@ export class FunctionService {
         })
     }
 
-    async getFunctionByCompanyIdAndStatus(companyId: number, status: boolean): Promise<Function[]> {
-        return this.request(`/api/function/search?companyId=${companyId}&status=${status}`, { method: 'GET' });
+    async getFunctionByCompanyIdStatusNameAndCode(companyId: number, status: boolean, functionName: string, internalCode: number): Promise<Function[]> {
+        return this.request(`/api/function/search?companyId=${companyId}&status=${status}&functionName=${functionName}&internalCode=${internalCode}`, { method: 'GET' });
     }
 
 }

@@ -38,7 +38,7 @@ export interface SearchActions {
     onSetName: (name: string) => void;
     onSetCode: (code: number) => void;
     onSelectStatus: (status: boolean) => void;
-    onSearchFunctions: (companyId: number, status: boolean) => void;
+    onSearchFunctions: (companyId: number, status: boolean, functionName: string, internalCode: number) => void;
 }
 
 export interface SearchFunctionProps {
