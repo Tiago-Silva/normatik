@@ -117,7 +117,12 @@ const SearchFunction: React.FC<Props> = (
                     icon={FaSearch}
                     background={'#31b331'}
                     width={'300px'}
-                    onClick={() => searchActions.onSearchFunctions(searchFilters.company.id, searchFilters.status)}
+                    onClick={() => searchActions.onSearchFunctions(
+                        searchFilters.company.id,
+                        searchFilters.status,
+                        searchFilters.name,
+                        searchFilters.code,
+                    )}
                 />
 
                 <Button
