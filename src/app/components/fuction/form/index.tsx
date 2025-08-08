@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styles from './index.module.css';
 import {FaFileAlt, FaSave} from "react-icons/fa";
 import Button from "@/app/components/button/button";
@@ -61,42 +61,43 @@ const FormFunction: React.FC<Props> = (
         }
     };
 
-    // const handleEditSector = async (data: functionData) => {
-        // if (!company || !sector) {
-        //     throw new Error('Empresa ou setor não definidos');
-        // }
-        //
-        // const updateSector: Omit<Sector, 'company'> = {
-        //     ...sector,
-        //     ...data,
-        //     companyId: company.id,
-        //     updatedAt: new Date(),
-        // };
-        //
-        // const service = new SectorService();
-        // onUpdateSectorListWhenSaving();
-        // try {
-        //     await service.updateSector(updateSector);
-        // } catch (error) {
-        //     console.error('Error updating sector', error);
-        // }
-    // };
+    const handleEditFunction = async (data: functionData) => {
+        if (!company || !func) {
+            throw new Error('Empresa ou função não definidos');
+        }
 
-    // useEffect(() => {
-    //     if (sector) {
-    //         setValue('nameRef', sector.nameRef);
-    //         setValue('internalCode', sector.internalCode);
-    //         setValue('description', sector.description);
-    //         setValue('sendDescription', sector.sendDescription);
-    //         setValue('includeBuilding', sector.includeBuilding);
-    //         setValue('status', sector.status);
-    //     }
-    // }, [sector, setValue]);
+        const updateFunction: Omit<Function, 'company'> = {
+            ...func,
+            ...data,
+            companyId: company.id,
+            updatedAt: new Date(),
+            editedBy: 'Tiago'
+        };
+
+        const service = new FunctionService();
+        onUpdateSectorListWhenSaving();
+        try {
+            await service.updateFunction(updateFunction);
+        } catch (error) {
+            console.error('Error updating function', error);
+        }
+    };
+
+    useEffect(() => {
+        if (func) {
+            setValue('name', func.name);
+            setValue('code', func.code);
+            setValue('description', func.description);
+            setValue('cbo', func.cbo);
+            setValue('status', func.status);
+            setValue('company', company || {} as Company);
+        }
+    }, [func, company, setValue]);
 
     return (
         <div className={styles.container}>
             <h2 className={styles.title}><FaFileAlt/> Dados da Função <span>*</span>:</h2>
-            <form onSubmit={handleSubmit(handleCreateFunction)}>
+            <form onSubmit={handleSubmit(func ? handleEditFunction : handleCreateFunction)}>
 
                 <Input
                     label={'Empresa:'}
