@@ -20,6 +20,7 @@ const columns = [
 const FunctionComponent = () => {
     const [showForm, setShowForm] = useState(false);
     const [filteredFunctionList, setFilteredFunctionList] = useState<Function[]>([]);
+    const [func, setFunc] = useState<Function>({} as Function);
 
     const {filters, setStatus, setName, setCode, setCompany} = useSearchFilters();
 
@@ -59,10 +60,10 @@ const FunctionComponent = () => {
     //     handleShowForm();
     // }
 
-    // const handleEditSector = (data: Sector) => {
-    //     setSector(data);
-    //     setShowForm(!showForm);
-    // }
+    const handleEditFunction = (data: Function) => {
+        setFunc(data);
+        setShowForm(!showForm);
+    }
 
     return (
         <div className={styles.container}>
@@ -70,6 +71,7 @@ const FunctionComponent = () => {
             {showForm ? (
                 <FormFunction
                     company={filters.company}
+                    func={func}
                     onShowForm={handleShowForm}
                     onUpdateSectorListWhenSaving={() => {
                     }}
@@ -89,7 +91,7 @@ const FunctionComponent = () => {
                     <List<Function>
                         list={filteredFunctionList}
                         columns={columns}
-                        onEditItem={() => {}}
+                        onEditItem={handleEditFunction}
                     />
                 </>
             )}

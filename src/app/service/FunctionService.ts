@@ -28,11 +28,10 @@ export class FunctionService {
                 cbo: func.cbo,
                 description: func.description ?? undefined,
                 status: func.status,
-                createAt: func.createdAt ?? undefined,
-                updateAt: func.updatedAt ?? undefined,
+                createdAt: func.createdAt ?? undefined,
+                updatedAt: func.updatedAt ?? undefined,
                 editedBy: func.editedBy ?? undefined,
                 companyId: func.companyId ?? undefined,
-                company: func.company,
             })
         })
     }
