@@ -1,6 +1,7 @@
 // hooks/useSearchFilters.ts
 import { useState } from 'react';
 import {Company} from "@/app/interface/Company";
+import {Function as FunctionInterface} from "@/app/interface/Function";
 
 export const useSearchFilters = () => {
     const [filters, setFilters] = useState({
@@ -8,6 +9,7 @@ export const useSearchFilters = () => {
         name: '',
         code: 0,
         status: true,
+        func: {} as FunctionInterface
     });
 
     const updateFilter = <K extends keyof typeof filters>(
@@ -24,5 +26,6 @@ export const useSearchFilters = () => {
         setName: (name: string) => updateFilter('name', name),
         setCode: (code: number) => updateFilter('code', code),
         setStatus: (status: boolean) => updateFilter('status', status),
+        setFunc: (func: FunctionInterface) => updateFilter('func', func),
     };
 };
