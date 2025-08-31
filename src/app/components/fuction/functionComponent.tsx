@@ -20,9 +20,8 @@ const columns = [
 const FunctionComponent = () => {
     const [showForm, setShowForm] = useState(false);
     const [filteredFunctionList, setFilteredFunctionList] = useState<Function[]>([]);
-    const [func, setFunc] = useState<Function>({} as Function);
 
-    const {filters, setStatus, setName, setCode, setCompany} = useSearchFilters();
+    const {filters, setStatus, setName, setCode, setCompany, setFunc} = useSearchFilters();
 
     const handleGetFunctionByCompanyIdAndStatus = async (
         companyId: number,
@@ -42,23 +41,26 @@ const FunctionComponent = () => {
     }
 
     const handleShowForm = () => {
-        // if (!showForm && filters.sector) {
-        //     setSector({} as Sector);
-        // }
+        if (!showForm && filters.func) {
+            setFunc({} as Function);
+        }
         setShowForm(!showForm);
     };
 
-    // const handleGetSectorByCompanyIdAndSectorStatus = async (companyId: number, status: boolean) => {
-    //     setStatus(status);
-    //     const service = new SectorService();
-    //     const data = await service.getSectorsByCompanyIdAndStatus(companyId, status);
-    //     setFilteredSectorList(data);
-    // }
-
-    // const handleUpdateSectorListWhenSaving = () => {
-    //     handleGetSectorByCompanyIdAndSectorStatus(company.id, true).then();
-    //     handleShowForm();
-    // }
+    const handleUpdateFunctionListWhenSaving = async () => {
+        try {
+            await new Promise(resolve => setTimeout(resolve, 300));
+            await handleGetFunctionByCompanyIdAndStatus(
+                filters.company.id,
+                filters.status,
+                filters.name,
+                filters.code
+            );
+            handleShowForm();
+        } catch (error) {
+            console.error('Erro ao atualizar lista:', error);
+        }
+    }
 
     const handleEditFunction = (data: Function) => {
         setFunc(data);
@@ -71,10 +73,9 @@ const FunctionComponent = () => {
             {showForm ? (
                 <FormFunction
                     company={filters.company}
-                    func={func}
+                    func={filters.func}
                     onShowForm={handleShowForm}
-                    onUpdateSectorListWhenSaving={() => {
-                    }}
+                    onUpdateSectorListWhenSaving={handleUpdateFunctionListWhenSaving}
                 />
             ) : (
                 <>
