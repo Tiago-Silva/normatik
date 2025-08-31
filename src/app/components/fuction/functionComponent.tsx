@@ -41,7 +41,7 @@ const FunctionComponent = () => {
     }
 
     const handleShowForm = () => {
-        if (!showForm && filters.func) {
+        if (showForm && filters.func) {
             setFunc({} as Function);
         }
         setShowForm(!showForm);
@@ -49,7 +49,6 @@ const FunctionComponent = () => {
 
     const handleUpdateFunctionListWhenSaving = async () => {
         try {
-            await new Promise(resolve => setTimeout(resolve, 300));
             await handleGetFunctionByCompanyIdAndStatus(
                 filters.company.id,
                 filters.status,
