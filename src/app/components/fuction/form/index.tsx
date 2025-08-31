@@ -53,7 +53,6 @@ const FormFunction: React.FC<Props> = (
 
         const service = new FunctionService();
         try {
-            console.log('newFunction: ', JSON.stringify(newFunction));
             await service.createFunction(newFunction);
             onUpdateSectorListWhenSaving();
         } catch (error) {
@@ -75,9 +74,9 @@ const FormFunction: React.FC<Props> = (
         };
 
         const service = new FunctionService();
-        onUpdateSectorListWhenSaving();
         try {
             await service.updateFunction(updateFunction);
+            onUpdateSectorListWhenSaving();
         } catch (error) {
             console.error('Error updating function', error);
         }
@@ -97,7 +96,7 @@ const FormFunction: React.FC<Props> = (
     return (
         <div className={styles.container}>
             <h2 className={styles.title}><FaFileAlt/> Dados da Função <span>*</span>:</h2>
-            <form onSubmit={handleSubmit(func ? handleEditFunction : handleCreateFunction)}>
+            <form onSubmit={handleSubmit(func?.id ? handleEditFunction : handleCreateFunction)}>
 
                 <Input
                     label={'Empresa:'}
